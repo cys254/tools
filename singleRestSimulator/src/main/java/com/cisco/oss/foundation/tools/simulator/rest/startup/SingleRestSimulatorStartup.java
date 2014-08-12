@@ -33,7 +33,6 @@ import java.util.*;
 public final class SingleRestSimulatorStartup {
     private static final String SINGLE_REST_SIMULATOR = "restSimulator";
     private static Logger logger = Logger.getLogger(SingleRestSimulatorStartup.class.getName());
-//	private static Server server = null;
 
     public static void main(final String[] args) {
         startServer();

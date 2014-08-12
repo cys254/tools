@@ -16,7 +16,7 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.resources;
 
-import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HttpMethod;
@@ -53,10 +53,10 @@ public class SimulatorResource {
 
 	@GET
 	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
-	public Response getResource(@Context ServletConfig servletConfig, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
+	public Response getResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
 		
-		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.GET, servletConfig, uriInfo, headers, body);
+		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.GET, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
 	
@@ -64,27 +64,27 @@ public class SimulatorResource {
 
 	@PUT
 	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
-	public Response updateResource(@Context ServletConfig servletConfig, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
+	public Response updateResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
-		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.PUT, servletConfig, uriInfo, headers, body);
+		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.PUT, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
 	}
 
 	@POST
 	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
-	public Response createResource(@Context ServletConfig servletConfig, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
+	public Response createResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
-		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.POST, servletConfig, uriInfo, headers, body);
+		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.POST, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
 	}
 
 	@DELETE
 	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
-	public Response deleteResource(@Context ServletConfig servletConfig, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
+	public Response deleteResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
-		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.DELETE, servletConfig, uriInfo, headers, body);
+		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.DELETE, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
 	}

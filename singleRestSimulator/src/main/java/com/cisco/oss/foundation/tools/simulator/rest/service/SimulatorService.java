@@ -16,6 +16,22 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.UriInfo;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cisco.oss.foundation.configuration.ConfigurationFactory;
 import com.cisco.oss.foundation.http.server.jetty.JettyHttpServerFactory;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorEntity;
@@ -23,20 +39,6 @@ import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorRequest;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.UriInfo;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SimulatorService {
 
@@ -157,9 +159,9 @@ public class SimulatorService {
 		return simulators.containsKey(port);
 	}
 
-	public ResponseBuilder retrieveResponse(String method, ServletConfig servletConfig, UriInfo uriInfo, HttpHeaders headers, String body) {
+	public ResponseBuilder retrieveResponse(String method, HttpServletRequest httpServletRequest, UriInfo uriInfo, HttpHeaders headers, String body) {
 
-        int port = Integer.parseInt(servletConfig.getInitParameter("port"));
+        int port = httpServletRequest.getLocalPort();
 		
 		if (!simulatorExists(port)) {
 			logger.error("there is no simulator on port " + port);
@@ -167,14 +169,26 @@ public class SimulatorService {
 		}
 		
 		SimulatorEntity simulator = simulators.get(port);
-		
-		SimulatorRequest simulatorRequest = new SimulatorRequest(method, uriInfo.getPath(), uriInfo.getQueryParameters(),
+		String path = uriInfo.getPath();
+		path = removeFirstAndLastSlashesFromUrl(path);
+		SimulatorRequest simulatorRequest = new SimulatorRequest(method, path, uriInfo.getQueryParameters(),
 				headers.getRequestHeaders(), body);
 		
 		simulator.addRequestToQueue(simulatorRequest);
 		
 		return simulator.generateResponse(simulatorRequest);
 		
+	}
+	
+	private String removeFirstAndLastSlashesFromUrl(String expectedUrl) {
+		// will remove the first and last '/'
+		if (expectedUrl.startsWith("/")) {
+			expectedUrl = expectedUrl.substring(1);
+		}
+		if (expectedUrl.endsWith("/")) {
+			expectedUrl = expectedUrl.substring(0, expectedUrl.length() - 1);
+		}
+		return expectedUrl;
 	}
 
 	public List<SimulatorRequest> getAllQueueOfSimulator(int port) {

@@ -100,15 +100,21 @@ public class SimulatorResponse {
 	}
 
 	public void setExpectedUrl(String expectedUrl) {
-		//will remove the first and last '/'
+		expectedUrl = removeFirstAndLastSlashesFromUrl(expectedUrl);
+		
+		Pattern urlPattern = Pattern.compile(expectedUrl);
+		this.expectedUrlPattern = urlPattern;
+	}
+
+	private String removeFirstAndLastSlashesFromUrl(String expectedUrl) {
+		// will remove the first and last '/'
 		if (expectedUrl.startsWith("/")) {
 			expectedUrl = expectedUrl.substring(1);
 		}
 		if (expectedUrl.endsWith("/")) {
-			expectedUrl = expectedUrl.substring(0, expectedUrl.length() -1);
+			expectedUrl = expectedUrl.substring(0, expectedUrl.length() - 1);
 		}
-		Pattern urlPattern = Pattern.compile(expectedUrl);
-		this.expectedUrlPattern = urlPattern;
+		return expectedUrl;
 	}
 
 	public Map<String, List<Pattern>> getExpectedQueryParams() {
