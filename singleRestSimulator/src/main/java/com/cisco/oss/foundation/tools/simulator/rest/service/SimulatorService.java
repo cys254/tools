@@ -1,20 +1,5 @@
 package com.cisco.oss.foundation.tools.simulator.rest.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.UriInfo;
-
-import org.eclipse.jetty.server.Server;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.cisco.oss.foundation.configuration.ConfigurationFactory;
 import com.cisco.oss.foundation.http.server.jetty.JettyHttpServerFactory;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorEntity;
@@ -22,8 +7,20 @@ import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorRequest;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.spi.container.servlet.ServletContainer;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.UriInfo;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SimulatorService {
 
@@ -55,9 +52,11 @@ public class SimulatorService {
 			logger.error("simulator on port " + port + " already exists");
 			return false;
 		}
+
+        ResourceConfig resourceConfig = new ResourceConfig();
+        resourceConfig.packages("com.cisco.oss.foundation.tools");
 		
-		ServletContainer servletContainer = new ServletContainer(new PackagesResourceConfig(
-				"com.nds.cab.pps.simulator.rest.resources"));
+		ServletContainer servletContainer = new ServletContainer(resourceConfig);
 		
 		ListMultimap<String, Servlet> servlets = ArrayListMultimap.create();
 		servlets.put("/*", servletContainer);
