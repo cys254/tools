@@ -76,5 +76,20 @@ public class SimulatorRequest {
 		this.body = body;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		
+		String queryParametersString = "";
+		for ( String paramKey : queryParameters.keySet())
+			queryParametersString += paramKey + "=" + queryParameters.get(paramKey) + ", ";
+		
+		builder.append("Method: " + method + System.lineSeparator() + 
+				"Path: " + path + System.lineSeparator() +
+				"Body: " + body + System.lineSeparator() + 
+				"Query Parameters: " + queryParametersString + System.lineSeparator());
+		
+		return builder.toString();
+	}
 	
 }

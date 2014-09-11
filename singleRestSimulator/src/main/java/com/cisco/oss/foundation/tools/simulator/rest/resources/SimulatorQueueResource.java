@@ -119,4 +119,24 @@ public class SimulatorQueueResource {
 		return Response.status(Status.OK).entity("queue of simulator on port " + port + " is empty").build();
 	}
 
+	/**
+	 * this function will delete the last request from the queue on this port
+	 */
+	@DELETE
+	@Path("/lastRequest")
+	public Response deleteLastRequestFromQueue(@PathParam("port") final int port) {
+		if (!simulatorService.simulatorExists(port)) {
+			String msg = "can not delete last request from queue of simulator. simulator on port " + port +  " doesn't exist";
+			logger.error(msg);
+			return Response.status(Status.BAD_REQUEST).entity(msg).build();
+		}
+		
+		SimulatorRequest removeLastRequestOfSimulator = simulatorService.removeLastRequestOfSimulator(port);
+		if (removeLastRequestOfSimulator == null) {
+			return Response.status(Status.OK).entity("queue is empty. No request of simulator on port " + port + " was removed").build();
+		} else {
+			return Response.status(Status.OK).entity("last request of simulator on port " + port + " was removed: " +
+					System.lineSeparator() + removeLastRequestOfSimulator.toString()).build();
+		}
+	}
 }

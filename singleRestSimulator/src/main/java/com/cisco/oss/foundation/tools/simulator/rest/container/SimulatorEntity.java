@@ -86,9 +86,18 @@ public class SimulatorEntity {
 		return allRequests;
 	}
 
-
 	public void removeAllRequests() {
 		allRequests = new ArrayList<SimulatorRequest>();
+	}
+	
+	public SimulatorRequest removeLastRequest() {
+		if (allRequests.size() > 0) {
+			SimulatorRequest deletedSimulatorRequest = allRequests.get(0);
+			allRequests.remove(0);
+			return deletedSimulatorRequest;
+		}
+		
+		return null;
 	}
 
 	public void setAllRequests(List<SimulatorRequest> allRequests) {

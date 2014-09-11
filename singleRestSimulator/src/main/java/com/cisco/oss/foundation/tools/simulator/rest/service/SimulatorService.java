@@ -220,6 +220,18 @@ public class SimulatorService {
 		}
 	}
 
+	public SimulatorRequest removeLastRequestOfSimulator(int port) {
+		SimulatorEntity simulator = getSimulator(port);
+
+		if (simulator != null) {
+			SimulatorRequest removedLastRequest = simulator.removeLastRequest();
+			logger.debug("last request was removed for simulator on port:" + port);
+			return removedLastRequest;
+		}
+		
+		return null;
+	}
+	
 	public boolean addNextResponseToSimulator(int port,	SimulatorResponse simulatorNextResponse) {
 		if (!simulatorExists(port)) {
 			logger.error("there is no simulator on port " + port);
