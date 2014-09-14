@@ -45,6 +45,7 @@ import com.cisco.oss.foundation.tools.simulator.rest.service.SimulatorService;
 @Scope("request")
 public class SimulatorResource {
 
+	private static final String subResourcesPath = "{subResources: [:!a-zA-Z0-9~%_/-]+}";
 	private SimulatorService simulatorService;
 
 	public SimulatorResource() {
@@ -52,7 +53,7 @@ public class SimulatorResource {
 	}
 
 	@GET
-	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
+	@Path(subResourcesPath)
 	public Response getResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
 		
@@ -63,7 +64,7 @@ public class SimulatorResource {
 	}
 
 	@PUT
-	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
+	@Path(subResourcesPath)
 	public Response updateResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.PUT, httpServletRequest, uriInfo, headers, body);
@@ -72,7 +73,7 @@ public class SimulatorResource {
 	}
 
 	@POST
-	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
+	@Path(subResourcesPath)
 	public Response createResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.POST, httpServletRequest, uriInfo, headers, body);
@@ -81,7 +82,7 @@ public class SimulatorResource {
 	}
 
 	@DELETE
-	@Path("{subResources: [a-zA-Z0-9~%_/-]+}")
+	@Path(subResourcesPath)
 	public Response deleteResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.DELETE, httpServletRequest, uriInfo, headers, body);
