@@ -38,7 +38,7 @@
         <property name="connectors">
             <list>
                 <bean id="Connector" class="org.mortbay.jetty.nio.SelectChannelConnector">
-                     <property name="port" value="${restsim.port}"/>           
+                     <property name="port" value="${restSimulator.http.port}"/>           
                 </bean>
             </list>
         </property>

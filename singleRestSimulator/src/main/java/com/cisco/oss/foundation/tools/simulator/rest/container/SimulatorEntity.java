@@ -29,14 +29,12 @@ public class SimulatorEntity {
 
 	private int port;
 	private List<SimulatorResponse> simulatorResponses;
-//	private Server server;
 	private List<SimulatorRequest> allRequests;
 	
 	private SimulatorResponse simulatorNextResponse;
 	
 	public SimulatorEntity(int port/*, Server server*/) {
 		this.port = port;
-//		this.server = server;
 		simulatorResponses = new ArrayList<SimulatorResponse>();
 		allRequests = new ArrayList<SimulatorRequest>();
 	}
@@ -56,14 +54,6 @@ public class SimulatorEntity {
 	public void setSimulatorResponses(List<SimulatorResponse> simulatorResponses) {
 		this.simulatorResponses = simulatorResponses;
 	}
-
-//	public Server getServer() {
-//		return server;
-//	}
-//
-//	public void setServer(Server server) {
-//		this.server = server;
-//	}
 
 	public void addRequestToQueue(SimulatorRequest simulatorRequest) {
 		allRequests.add(0, simulatorRequest);

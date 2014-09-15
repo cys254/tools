@@ -16,6 +16,8 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.resources;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,10 +28,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +50,8 @@ import com.cisco.oss.foundation.tools.simulator.rest.service.SimulatorService;
 @Scope("request")
 public class SimulatorResource {
 
+	private static Logger logger = LoggerFactory.getLogger(SimulatorResource.class);
+	
 	private static final String subResourcesPath = "{subResources: [:!a-zA-Z0-9~%_/-]+}";
 	private SimulatorService simulatorService;
 
@@ -56,6 +63,8 @@ public class SimulatorResource {
 	@Path(subResourcesPath)
 	public Response getResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
+		
+		logMethod(HttpMethod.GET, uriInfo);
 		
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.GET, httpServletRequest, uriInfo, headers, body);
 
@@ -88,6 +97,29 @@ public class SimulatorResource {
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.DELETE, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
+	}
+	
+
+	private void logMethod(String method, UriInfo uriInfo) {
+		String queryParams = uriInfo.getQueryParameters() == null ? "":getQueryParamsStringForLogging(uriInfo.getQueryParameters());
+		logger.debug("Simulator recieved a " + method + " request | path = " + uriInfo.getPath() + " | queryParams:" +  queryParams);
+		
+	}
+
+	private String getQueryParamsStringForLogging(MultivaluedMap<String, String> multivaluedMap) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (String key : multivaluedMap.keySet()) {
+			List<String> values = multivaluedMap.get(key);
+			sb.append(key).append("=[");
+			
+			for (String value : values) {
+				sb.append(value).append(",");
+			}
+			sb.append("] ");
+		}
+		return sb.toString();
 	}
 	
 }
