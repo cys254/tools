@@ -99,7 +99,6 @@ public class SimulatorResource {
 		return rb.build();
 	}
 	
-
 	private void logMethod(String method, UriInfo uriInfo) {
 		String queryParams = uriInfo.getQueryParameters() == null ? "":getQueryParamsStringForLogging(uriInfo.getQueryParameters());
 		logger.debug("Simulator recieved a " + method + " request | path = " + uriInfo.getPath() + " | queryParams:" +  queryParams);

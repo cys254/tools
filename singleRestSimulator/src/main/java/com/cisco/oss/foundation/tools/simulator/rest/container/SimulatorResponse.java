@@ -36,7 +36,7 @@ public class SimulatorResponse {
 	private String expectedMethod;
 	private Map<String, List<Pattern>> expectedQueryParams;
 	private Map<String, String> expectedHeaders;
-	private String expectedBody;
+	private Pattern expectedBodyPattern;
 	private int responseCode;
 	private Map<String, String> responseHeaders;
 	private String responseBody;
@@ -51,12 +51,17 @@ public class SimulatorResponse {
 		this.expectedHeaders = expectedHeaders;
 	}
 
-	public String getExpectedBody() {
-		return expectedBody;
+	public Pattern getExpectedBody() {
+		return expectedBodyPattern;
 	}
 
 	public void setExpectedBody(String expectedBody) {
-		this.expectedBody = expectedBody;
+		
+		if (expectedBody == null || expectedBody.isEmpty()) {
+			expectedBody = ".*";
+		}
+		
+		this.expectedBodyPattern = Pattern.compile(expectedBody);
 	}
 
 	public int getResponseCode() {
@@ -294,14 +299,7 @@ public class SimulatorResponse {
 	}
 
 	private boolean isBodyValid(String body) {
-		
-		if (StringUtils.isEmpty(expectedBody)) {
-			return true;
-		} else if (StringUtils.isEmpty(body)) {
-			return false;
-		}
-		
-		return expectedBody.equals(body);
+		return expectedBodyPattern.matcher(body).matches();
 	}
 
 	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {
@@ -376,11 +374,12 @@ public class SimulatorResponse {
 	public String toString() {
 		return "SimulatorResponse [expectedMethod=" + expectedMethod
 				+ ", expectedQueryParams=" + expectedQueryParams
-				+ ", expectedHeaders=" + expectedHeaders + ", expectedBody="
-				+ expectedBody + ", responseCode=" + responseCode
-				+ ", responseHeaders=" + responseHeaders + ", responseBody="
-				+ responseBody + ", latencyMs=" + latencyMs
-				+ ", expectedUrlPattern=" + expectedUrlPattern + "]";
+				+ ", expectedHeaders=" + expectedHeaders
+				+ ", expectedBodyPattern=" + expectedBodyPattern
+				+ ", responseCode=" + responseCode + ", responseHeaders="
+				+ responseHeaders + ", responseBody=" + responseBody
+				+ ", latencyMs=" + latencyMs + ", expectedUrlPattern="
+				+ expectedUrlPattern + "]";
 	}
 
 }
