@@ -64,7 +64,7 @@ public class SimulatorResource {
 	public Response getResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
 		
-		logMethod(HttpMethod.GET, uriInfo);
+		logMethod(HttpMethod.GET, uriInfo, body);
 		
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.GET, httpServletRequest, uriInfo, headers, body);
 
@@ -76,8 +76,10 @@ public class SimulatorResource {
 	@Path(subResourcesPath)
 	public Response updateResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
+		
+		logMethod(HttpMethod.PUT, uriInfo, body);
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.PUT, httpServletRequest, uriInfo, headers, body);
-
+		
 		return rb.build();
 	}
 
@@ -85,6 +87,9 @@ public class SimulatorResource {
 	@Path(subResourcesPath)
 	public Response createResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
+		
+		logMethod(HttpMethod.POST, uriInfo, body);
+		
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.POST, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
@@ -94,14 +99,23 @@ public class SimulatorResource {
 	@Path(subResourcesPath)
 	public Response deleteResource(@Context HttpServletRequest httpServletRequest, @Context final UriInfo uriInfo, @Context HttpHeaders headers,
 			@PathParam("subResources") String subResources, String body) {
+		
+		logMethod(HttpMethod.DELETE, uriInfo, body);
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.DELETE, httpServletRequest, uriInfo, headers, body);
 
 		return rb.build();
 	}
 	
-	private void logMethod(String method, UriInfo uriInfo) {
-		String queryParams = uriInfo.getQueryParameters() == null ? "":getQueryParamsStringForLogging(uriInfo.getQueryParameters());
-		logger.debug("Simulator recieved a " + method + " request | path = " + uriInfo.getPath() + " | queryParams:" +  queryParams);
+	private void logMethod(String method, UriInfo uriInfo, String body) {
+		try {
+		String queryParams = uriInfo.getQueryParameters() == null ? "" : getQueryParamsStringForLogging(uriInfo.getQueryParameters());
+		logger.debug("Simulator recieved a " + method + " request | "
+				+ "path: " + uriInfo.getPath() + " | "
+				+ "queryParams: " +  queryParams + "| "
+				+ "body: " +  body);
+		} catch(Exception e) {
+			logger.error("failed writing to log");
+		}
 		
 	}
 
@@ -116,8 +130,10 @@ public class SimulatorResource {
 			for (String value : values) {
 				sb.append(value).append(",");
 			}
+			sb.replace(sb.length()-1, sb.length(), "");
 			sb.append("] ");
 		}
+		
 		return sb.toString();
 	}
 	
