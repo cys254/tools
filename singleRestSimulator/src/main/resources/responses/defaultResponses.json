@@ -1,22 +1,2 @@
-[{
-  "expectedMethod" : "GET",
-  "expectedHeaders":{"Sync-Mode":"true","Content-Type":"application/json"},
-  "expectedQueryParams":{"howAreYou":"(\\w*)","areYouSure":"(\\w*)"},
-  "expectedBody":"",
-  "expectedUrl":"pps/households/(\\w*)/catalog/(\\w*)",
-  "responseCode":200,
-  "responseHeaders":{"My-Header":"My-Header-Val","Location":"www.google.com"},
-  "responseBody":"household {$1} catalog-item {$2}. (hh={$1})\nI am {@howAreYou}. {@areYouSure}, I am sure",
-  "latencyMs":0
-},
-{
-  "expectedMethod" : "GET",
-  "expectedHeaders":{"Sync-Mode":"true","Content-Type":"application/json"},
-  "expectedQueryParams":{"howAreYou":"(\\w*)","areYouSure":"(\\w*)"},
-  "expectedBody":"",
-  "expectedUrl":"pps/households/(\\w*)/catalog/(\\w*)",
-  "responseCode":200,
-  "responseHeaders":{"My-Header":"My-Header-Val","Location":"www.google.com"},
-  "responseBody":"household {$1} catalog-item {$2}. (hh={$1})\nI am {@howAreYou}. {@areYouSure}, I am sure",
-  "latencyMs":0
-}]
+[{"expectedMethod":"GET","expectedQueryParams":{"blabla":["false"],"metadata":["true","false","sometimes"]},"expectedHeaders":{"Sync-Mode":"true","Content-Type":"application/json"},"responseCode":200,
+"responseHeaders":{"My-Header":"My-Header-Val","Location":"www.google.com"},"responseBody":"responseBodyStr","latencyMs":0,"expectedUrlPattern":"expected/url","expectedBody":".*"}]
