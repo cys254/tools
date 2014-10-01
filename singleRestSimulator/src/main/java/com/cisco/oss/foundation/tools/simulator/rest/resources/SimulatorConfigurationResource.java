@@ -110,7 +110,7 @@ public class SimulatorConfigurationResource {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("failed adding simulator on port " + port).build();
 		}
 	}
-	
+
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public Response updateSimulator(@PathParam("port") final int port, final String simulatorResponseStr) {
@@ -124,7 +124,7 @@ public class SimulatorConfigurationResource {
 		 boolean added = false;;
 		 
 		if (StringUtils.isEmpty(simulatorResponseStr)) {
-			String msg = "it's the last time we're saying it - when adding a response to an existing simulator you need to specify the response json in the body." +
+			String msg = "When adding a response to an existing simulator you need to specify the response json in the body." +
 					" if you want to load the simulator from a file just write 'file' in the body and we'll take it from the default location which is at: " +
 					" src/main/resources/responses/defaultResponses.json - sababa ?";
 			logger.error(msg);
@@ -133,6 +133,9 @@ public class SimulatorConfigurationResource {
 		
 		if (simulatorResponseStr.trim().equalsIgnoreCase("file")) {	
 			added = addResponsesFromDefaultFile(port);
+		} else if (simulatorResponseStr.trim().startsWith("file:") && simulatorResponseStr.trim().endsWith(".json")) {
+			String fileName = StringUtils.right(simulatorResponseStr, simulatorResponseStr.length() - 5);
+			added = addResponsesFromSpecificFile(port, fileName);
 		} else {	
 			try {
 				simulatorResponse = objectMapper.readValue(simulatorResponseStr, SimulatorResponse.class);
@@ -151,25 +154,6 @@ public class SimulatorConfigurationResource {
 			rb = Response.status(Status.INTERNAL_SERVER_ERROR);
 		}
 		return rb.build();
-	}
-	
-	private boolean addResponsesFromDefaultFile(int port) {
-		List<SimulatorResponse> defaultResponses = loadDefaultResponses();
-		return simulatorService.addResponsesToSimulator(port, defaultResponses);
-	}
-
-	private List<SimulatorResponse> loadDefaultResponses() {
-		List<SimulatorResponse> response = null;
-		String defaultLocation = "/responses/defaultResponses.json";
-		InputStream is = getClass().getResourceAsStream(defaultLocation);
-		
-		try {
-			response = objectMapper.readValue(is, new TypeReference<List<SimulatorResponse>>() {});
-		} catch (IOException e) {
-			logger.error("failed loading simulatorResponses from default file",	e);
-		}
-
-		return response;	
 	}
 
 	@GET
@@ -227,6 +211,30 @@ public class SimulatorConfigurationResource {
 		logger.info(msg);
 		return Response.status(Status.OK).entity(isAliveStr).build();
 
+	}
+
+	private boolean addResponsesFromDefaultFile(int port) {
+		List<SimulatorResponse> defaultResponses = loadResponsesFromFile("defaultResponses.json");
+		return simulatorService.addResponsesToSimulator(port, defaultResponses);
+	}
+
+	private boolean addResponsesFromSpecificFile(int port, String fileName) {
+		List<SimulatorResponse> defaultResponses = loadResponsesFromFile(fileName);
+		return simulatorService.addResponsesToSimulator(port, defaultResponses);
+	}
+	
+	private List<SimulatorResponse> loadResponsesFromFile(String fileName) {
+		List<SimulatorResponse> response = null;
+		String defaultLocation = "/responses/" + fileName;
+		InputStream is = getClass().getResourceAsStream(defaultLocation);
+		
+		try {
+			response = objectMapper.readValue(is, new TypeReference<List<SimulatorResponse>>() {});
+		} catch (IOException e) {
+			logger.error("failed loading simulatorResponses from default file",	e);
+		}
+
+		return response;	
 	}
 
 

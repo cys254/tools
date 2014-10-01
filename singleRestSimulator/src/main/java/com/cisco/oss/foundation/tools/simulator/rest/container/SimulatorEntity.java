@@ -33,7 +33,7 @@ public class SimulatorEntity {
 	
 	private SimulatorResponse simulatorNextResponse;
 	
-	public SimulatorEntity(int port/*, Server server*/) {
+	public SimulatorEntity(int port) {
 		this.port = port;
 		simulatorResponses = new ArrayList<SimulatorResponse>();
 		allRequests = new ArrayList<SimulatorRequest>();
