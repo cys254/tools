@@ -1,374 +1,518 @@
-[
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:contentId": [
-                "contentId3~contentId3/contentInstanceId3"
-            ],
-            "targetType": [
-                "stb"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "stb"
-            ],
-            "filter:contentId": [
-                "cid://contentId3#contentId3/contentInstanceId3"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "region": [
-                "NOR~region1"
-            ],
-            "targetType": [
-                "rdvr"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-       "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content/contentId3",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:contentId": [
-                "contentId3~contentId3/contentInstanceId3"
-            ],
-            "targetType": [
-                "uhe"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:channel": [
-                "3"
-            ],
-            "filter:eventStartTime": [
-                "2014-09-30T14:29:16Z"
-            ],
-            "targetType": [
-                "uhe"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "catalogId": [
-                "contentId3~contentId3/contentInstanceId3"
-            ],
-            "targetType": [
-                "rdvr"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "filter:channelUri": [
-                "/mdp/channels/nativeChannel3"
-            ],
-            "filter:timeWindow": [
-                "\\Q(2014-09-30T14:29:16Z,2014-09-30T15:29:16Z)\\E"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "[{\"uri\":\"/mdp/content/fragment_left\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_left#contentId_left/fragment_left\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"3\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"3\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/fragment_right\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_right#contentId_right/fragment_right\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"3\",\"broadcastOrder\":1}]",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:contentId": [
-                "contentId3~contentId3/contentInstanceId3"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/content/contentId3\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"startTime\":\"2014-09-30T14:29:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChannel3\",\"recordingId\":\"cid://contentId3#contentId3/contentInstanceId3\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5891b770\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5cca1a7f\",\"seriesId\":\"no series\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/no series\"}}",
-        "latencyMs": 0,
-       "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "targetType": [
-                "rdvr"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/nativeChannel3\",\"type\":\"CHANNEL\",\"channelId\":\"3\",\"channel\":{\"content\":{\"id\":\"112\",\"name\":\"name111\",\"description\":\"Service One\",\"provider\":\"Cogeco\",\"logicalChannelNumber\":1,\"channel\":\"dvb://0001.0001.0001\",\"runningStatus\":true,\"drmProtected\":true,\"scheduleAvailable\":false,\"nowNextAvailable\":false,\"hidden\":false,\"recordControl\":\"noRecording\",\"genres\":[{\"type\":\"Drama\",\"_links\":{\"genres\":{\"href\":\"/cmdc/genre/urn%3Annds%3Auhe%3Agenre%3A01%3A3%3A0?lang=eng\"}}}],\"serviceDeliveries\":[{\"externalServiceId\":\"dvb://0001.0001.0001\"}],\"locator\":\"{1,java.lang.Integer,NORMAL}-|-{MjViMTdkMzczMjM1MDI2YjI0MDc=,java.lang.String,NORMAL}[+]{logicalChannelNumber.1,NORMAL}-|-{hashKey,NORMAL}\",\"countryOfOrigin\":\"CAN\",\"serviceNdsDrmAttributes\":{\"isIppv\":false,\"isOppv\":false,\"isSubscription\":false,\"isDrmFree\":true,\"hasFecm\":false,\"isIsu\":false,\"isBundle\":false},\"parentalRating\":{\"scheme\":\"custom\",\"rating\":7},\"_links\":{\"parentalRatings\":[{\"href\":\"/cmdc/parentalRating/urn%3Annds%3Auhe%3AparentalGuidance%3A01%3A7?lang=eng\"}]},\"restartAvailable\":false,\"catchupAvailable\":false,\"adult\":false,\"storeAvailable\":false,\"relatedRecommendationsAvailable\":false,\"isPlayable\":true,\"serviceEquivalenceKey\":\"101\"}}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels/nativeChannel3",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "targetType": [
-                "uhe"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/nativeChannel3\",\"type\":\"CHANNEL\",\"channelId\":\"3\"}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels/nativeChannel3",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:channel": [
-                "dvb://1"
-            ],
-            "targetType": [
-                "stb"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"dvb://1\"}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:channel": [
-                "1"
-            ],
-            "targetType": [
-                "stb"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "sourceType": [
-                "stb"
-            ],
-            "filter:channel": [
-                "dvb://1"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "filter:channel": [
-                "dvb://1"
-            ],
-            "targetType": [
-                "rdvr"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"1\",\"channel\":{\"content\":{\"id\":\"112\",\"name\":\"name111\",\"description\":\"Service One\",\"provider\":\"Cogeco\",\"logicalChannelNumber\":1,\"channel\":\"dvb://0001.0001.0001\",\"runningStatus\":true,\"drmProtected\":true,\"scheduleAvailable\":false,\"nowNextAvailable\":false,\"hidden\":false,\"recordControl\":\"noRecording\",\"genres\":[{\"type\":\"Drama\",\"_links\":{\"genres\":{\"href\":\"/cmdc/genre/urn%3Annds%3Auhe%3Agenre%3A01%3A3%3A0?lang=eng\"}}}],\"serviceDeliveries\":[{\"externalServiceId\":\"dvb://0001.0001.0001\"}],\"locator\":\"{1,java.lang.Integer,NORMAL}-|-{MjViMTdkMzczMjM1MDI2YjI0MDc=,java.lang.String,NORMAL}[+]{logicalChannelNumber.1,NORMAL}-|-{hashKey,NORMAL}\",\"countryOfOrigin\":\"CAN\",\"serviceNdsDrmAttributes\":{\"isIppv\":false,\"isOppv\":false,\"isSubscription\":false,\"isDrmFree\":true,\"hasFecm\":false,\"isIsu\":false,\"isBundle\":false},\"parentalRating\":{\"scheme\":\"custom\",\"rating\":7},\"_links\":{\"parentalRatings\":[{\"href\":\"/cmdc/parentalRating/urn%3Annds%3Auhe%3AparentalGuidance%3A01%3A7?lang=eng\"}]},\"restartAvailable\":false,\"catchupAvailable\":false,\"adult\":false,\"storeAvailable\":false,\"relatedRecommendationsAvailable\":false,\"isPlayable\":true,\"serviceEquivalenceKey\":\"101\"}}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-       "expectedQueryParams": {
-            "sourceType": [
-                "rdvr"
-            ],
-            "filter:channel": [
-                "1"
-            ],
-            "targetType": [
-                "uhe"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "targetType": [
-                "uhe"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels/1",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "filter:channelUri": [
-                "/mdp/channels/1"
-            ],
-            "filter:timeWindow": [
-                "\\Q(2014-09-30T15:19:16Z,2014-09-30T16:19:16Z)\\E"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "[{\"uri\":\"/mdp/content/fragment_left\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_left#contentId_left/fragment_left\",\"startTime\":\"2014-09-30T15:19:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/original\",\"type\":\"EVENT\",\"contentId\":\"cid://original#original/original\",\"startTime\":\"2014-09-30T15:19:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/fragment_right\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_right#contentId_right/fragment_right\",\"startTime\":\"2014-09-30T15:19:16Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1}]",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/content",
-        "expectedBody": null
-    },
-    {
-        "expectedMethod": "GET",
-        "expectedQueryParams": {
-            "targetType": [
-                "rdvr"
-            ]
-        },
-        "expectedHeaders": {
-            "Accept": "application/json"
-        },
-        "responseCode": 200,
-        "responseHeaders": null,
-        "responseBody": "{\"uri\":\"/mdp/channels/1\",\"type\":\"CHANNEL\",\"channelId\":\"1\",\"channel\":{\"content\":{\"id\":\"112\",\"name\":\"name111\",\"description\":\"Service One\",\"provider\":\"Cogeco\",\"logicalChannelNumber\":1,\"channel\":\"dvb://0001.0001.0001\",\"runningStatus\":true,\"drmProtected\":true,\"scheduleAvailable\":false,\"nowNextAvailable\":false,\"hidden\":false,\"recordControl\":\"noRecording\",\"genres\":[{\"type\":\"Drama\",\"_links\":{\"genres\":{\"href\":\"/cmdc/genre/urn%3Annds%3Auhe%3Agenre%3A01%3A3%3A0?lang=eng\"}}}],\"serviceDeliveries\":[{\"externalServiceId\":\"dvb://0001.0001.0001\"}],\"locator\":\"{1,java.lang.Integer,NORMAL}-|-{MjViMTdkMzczMjM1MDI2YjI0MDc=,java.lang.String,NORMAL}[+]{logicalChannelNumber.1,NORMAL}-|-{hashKey,NORMAL}\",\"countryOfOrigin\":\"CAN\",\"serviceNdsDrmAttributes\":{\"isIppv\":false,\"isOppv\":false,\"isSubscription\":false,\"isDrmFree\":true,\"hasFecm\":false,\"isIsu\":false,\"isBundle\":false},\"parentalRating\":{\"scheme\":\"custom\",\"rating\":7},\"_links\":{\"parentalRatings\":[{\"href\":\"/cmdc/parentalRating/urn%3Annds%3Auhe%3AparentalGuidance%3A01%3A7?lang=eng\"}]},\"restartAvailable\":false,\"catchupAvailable\":false,\"adult\":false,\"storeAvailable\":false,\"relatedRecommendationsAvailable\":false,\"isPlayable\":true,\"serviceEquivalenceKey\":\"101\"}}}",
-        "latencyMs": 0,
-        "expectedUrlPattern": "mdp/channels/1",
-        "expectedBody": null
-    }
-]
+[{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId101~instanceId101"],
+		"targetType": ["stb"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["stb"],
+		"filter:contentId": ["cid://contentId101#instanceId101"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"region": ["NOR~region1"],
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content/contentId101",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId101~instanceId101"],
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:channel": ["1"],
+		"filter:eventStartTime": ["2014-10-01T13:38:40Z"],
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"catalogId": ["contentId101~instanceId101"],
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"filter:channelUri": ["/mdp/channels/nativeChanne1"],
+		"filter:timeWindow": ["\\Q(2014-10-01T13:38:40Z,2014-10-01T14:38:40Z)\\E"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "[{\"uri\":\"/mdp/content/fragment_left\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_left#contentId_left/fragment_left\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/fragment_right\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_right#contentId_right/fragment_right\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1}]",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId101~instanceId101"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId101#instanceId101\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@6063762d\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@5f630ed7\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/channels/nativeChanne1\",\"type\":\"CHANNEL\",\"channelId\":\"1\",\"channel\":{\"content\":{\"id\":\"112\",\"name\":\"name111\",\"description\":\"Service One\",\"provider\":\"Cogeco\",\"logicalChannelNumber\":1,\"channel\":\"dvb://0001.0001.0001\",\"runningStatus\":true,\"drmProtected\":true,\"scheduleAvailable\":false,\"nowNextAvailable\":false,\"hidden\":false,\"recordControl\":\"noRecording\",\"genres\":[{\"type\":\"Drama\",\"_links\":{\"genres\":{\"href\":\"/cmdc/genre/urn%3Annds%3Auhe%3Agenre%3A01%3A3%3A0?lang=eng\"}}}],\"serviceDeliveries\":[{\"externalServiceId\":\"dvb://0001.0001.0001\"}],\"locator\":\"{1,java.lang.Integer,NORMAL}-|-{MjViMTdkMzczMjM1MDI2YjI0MDc=,java.lang.String,NORMAL}[+]{logicalChannelNumber.1,NORMAL}-|-{hashKey,NORMAL}\",\"countryOfOrigin\":\"CAN\",\"serviceNdsDrmAttributes\":{\"isIppv\":false,\"isOppv\":false,\"isSubscription\":false,\"isDrmFree\":true,\"hasFecm\":false,\"isIsu\":false,\"isBundle\":false},\"parentalRating\":{\"scheme\":\"custom\",\"rating\":7},\"_links\":{\"parentalRatings\":[{\"href\":\"/cmdc/parentalRating/urn%3Annds%3Auhe%3AparentalGuidance%3A01%3A7?lang=eng\"}]},\"restartAvailable\":false,\"catchupAvailable\":false,\"adult\":false,\"storeAvailable\":false,\"relatedRecommendationsAvailable\":false,\"isPlayable\":true,\"serviceEquivalenceKey\":\"101\"}}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/channels/nativeChanne1",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/channels/nativeChanne1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/channels/nativeChanne1",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId102~instanceId102"],
+		"targetType": ["stb"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["stb"],
+		"filter:contentId": ["cid://contentId102#instanceId102"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"region": ["NOR~region1"],
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content/contentId102",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId102~instanceId102"],
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:channel": ["1"],
+		"filter:eventStartTime": ["2014-10-02T13:28:40Z"],
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"catalogId": ["contentId102~instanceId102"],
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"filter:channelUri": ["/mdp/channels/nativeChanne1"],
+		"filter:timeWindow": ["\\Q(2014-10-02T13:28:40Z,2014-10-02T14:28:40Z)\\E"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "[{\"uri\":\"/mdp/content/fragment_left\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_left#contentId_left/fragment_left\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/fragment_right\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_right#contentId_right/fragment_right\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1}]",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId102~instanceId102"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId102#instanceId102\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@1146eae3\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7b35f90\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/channels/nativeChanne1\",\"type\":\"CHANNEL\",\"channelId\":\"1\",\"channel\":{\"content\":{\"id\":\"112\",\"name\":\"name111\",\"description\":\"Service One\",\"provider\":\"Cogeco\",\"logicalChannelNumber\":1,\"channel\":\"dvb://0001.0001.0001\",\"runningStatus\":true,\"drmProtected\":true,\"scheduleAvailable\":false,\"nowNextAvailable\":false,\"hidden\":false,\"recordControl\":\"noRecording\",\"genres\":[{\"type\":\"Drama\",\"_links\":{\"genres\":{\"href\":\"/cmdc/genre/urn%3Annds%3Auhe%3Agenre%3A01%3A3%3A0?lang=eng\"}}}],\"serviceDeliveries\":[{\"externalServiceId\":\"dvb://0001.0001.0001\"}],\"locator\":\"{1,java.lang.Integer,NORMAL}-|-{MjViMTdkMzczMjM1MDI2YjI0MDc=,java.lang.String,NORMAL}[+]{logicalChannelNumber.1,NORMAL}-|-{hashKey,NORMAL}\",\"countryOfOrigin\":\"CAN\",\"serviceNdsDrmAttributes\":{\"isIppv\":false,\"isOppv\":false,\"isSubscription\":false,\"isDrmFree\":true,\"hasFecm\":false,\"isIsu\":false,\"isBundle\":false},\"parentalRating\":{\"scheme\":\"custom\",\"rating\":7},\"_links\":{\"parentalRatings\":[{\"href\":\"/cmdc/parentalRating/urn%3Annds%3Auhe%3AparentalGuidance%3A01%3A7?lang=eng\"}]},\"restartAvailable\":false,\"catchupAvailable\":false,\"adult\":false,\"storeAvailable\":false,\"relatedRecommendationsAvailable\":false,\"isPlayable\":true,\"serviceEquivalenceKey\":\"101\"}}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/channels/nativeChanne1",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/channels/nativeChanne1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/channels/nativeChanne1",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId103~instanceId103"],
+		"targetType": ["stb"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["stb"],
+		"filter:contentId": ["cid://contentId103#instanceId103"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"region": ["NOR~region1"],
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content/contentId103",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId103~instanceId103"],
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:channel": ["1"],
+		"filter:eventStartTime": ["2014-10-03T13:28:40Z"],
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"catalogId": ["contentId103~instanceId103"],
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"filter:channelUri": ["/mdp/channels/nativeChanne1"],
+		"filter:timeWindow": ["\\Q(2014-10-03T13:28:40Z,2014-10-03T14:28:40Z)\\E"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "[{\"uri\":\"/mdp/content/fragment_left\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_left#contentId_left/fragment_left\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1},{\"uri\":\"/mdp/content/fragment_right\",\"type\":\"EVENT\",\"contentId\":\"cid://fragment_right#contentId_right/fragment_right\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"broadcastOrder\":1}]",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"sourceType": ["rdvr"],
+		"filter:contentId": ["contentId103~instanceId103"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"cid://contentId103#instanceId103\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3413e5b7\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@41282ad4\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"targetType": ["rdvr"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/channels/nativeChanne1\",\"type\":\"CHANNEL\",\"channelId\":\"1\",\"channel\":{\"content\":{\"id\":\"112\",\"name\":\"name111\",\"description\":\"Service One\",\"provider\":\"Cogeco\",\"logicalChannelNumber\":1,\"channel\":\"dvb://0001.0001.0001\",\"runningStatus\":true,\"drmProtected\":true,\"scheduleAvailable\":false,\"nowNextAvailable\":false,\"hidden\":false,\"recordControl\":\"noRecording\",\"genres\":[{\"type\":\"Drama\",\"_links\":{\"genres\":{\"href\":\"/cmdc/genre/urn%3Annds%3Auhe%3Agenre%3A01%3A3%3A0?lang=eng\"}}}],\"serviceDeliveries\":[{\"externalServiceId\":\"dvb://0001.0001.0001\"}],\"locator\":\"{1,java.lang.Integer,NORMAL}-|-{MjViMTdkMzczMjM1MDI2YjI0MDc=,java.lang.String,NORMAL}[+]{logicalChannelNumber.1,NORMAL}-|-{hashKey,NORMAL}\",\"countryOfOrigin\":\"CAN\",\"serviceNdsDrmAttributes\":{\"isIppv\":false,\"isOppv\":false,\"isSubscription\":false,\"isDrmFree\":true,\"hasFecm\":false,\"isIsu\":false,\"isBundle\":false},\"parentalRating\":{\"scheme\":\"custom\",\"rating\":7},\"_links\":{\"parentalRatings\":[{\"href\":\"/cmdc/parentalRating/urn%3Annds%3Auhe%3AparentalGuidance%3A01%3A7?lang=eng\"}]},\"restartAvailable\":false,\"catchupAvailable\":false,\"adult\":false,\"storeAvailable\":false,\"relatedRecommendationsAvailable\":false,\"isPlayable\":true,\"serviceEquivalenceKey\":\"101\"}}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/channels/nativeChanne1",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"targetType": ["uhe"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/channels/nativeChanne1\",\"type\":\"CHANNEL\",\"channelId\":\"1\"}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/channels/nativeChanne1",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": {
+		"filter:broadcastAfter": ["/mdp/content/contentId101"],
+		"filter:firstRun": ["false"]
+	},
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "[{\"uri\":\"/mdp/content/contentId102\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId102#instanceId102\",\"startTime\":\"2014-10-02T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"presentation\":{\"title\":\"titleSERIES_01\",\"sortTitle\":\"sorttitle_SERIES_01\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}},{\"uri\":\"/mdp/content/contentId103\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId103#instanceId103\",\"startTime\":\"2014-10-03T13:28:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"presentation\":{\"title\":\"titleSERIES_01\",\"sortTitle\":\"sorttitle_SERIES_01\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":2,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}]",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/series/rs:11111",
+	"expectedBody": null
+},
+{
+	"expectedMethod": "GET",
+	"expectedQueryParams": null,
+	"expectedHeaders": {
+		"Accept": "application/json"
+	},
+	"responseCode": 200,
+	"responseHeaders": null,
+	"responseBody": "{\"uri\":\"/mdp/content/contentId101\",\"type\":\"EVENT\",\"contentId\":\"cid://contentId101#instanceId101\",\"startTime\":\"2014-10-01T13:38:40Z\",\"duration\":\"01:00:00\",\"channelUri\":\"/mdp/channels/nativeChanne1\",\"recordingId\":\"1\",\"presentation\":{\"title\":\"titlecom.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@7f2d900\",\"sortTitle\":\"sorttitle_com.nds.vcs.stage2.httpSimulator.test.utilities.ContentMetadata$StringValue@3524e012\",\"seriesId\":\"rs:11111\"},\"broadcastOrder\":1,\"recurrenceUri\":{\"series\":\"/mdp/series/rs:11111\"}}",
+	"latencyMs": 0,
+	"expectedUrlPattern": "mdp/content/contentId101",
+	"expectedBody": null
+}]

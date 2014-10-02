@@ -299,6 +299,11 @@ public class SimulatorResponse {
 	}
 
 	private boolean isBodyValid(String body) {
+		
+		if (expectedBodyPattern == null) {
+			return StringUtils.isEmpty(body);
+		} 
+		
 		return expectedBodyPattern.matcher(body).matches();
 	}
 
