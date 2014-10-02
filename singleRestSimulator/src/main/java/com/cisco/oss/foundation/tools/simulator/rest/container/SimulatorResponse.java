@@ -52,21 +52,16 @@ public class SimulatorResponse {
 	}
 
 	public String getExpectedBody() {
-		if (expectedBodyPattern == null) {
-			return "";
-		}
 		return expectedBodyPattern.pattern();
 	}
 
 	public void setExpectedBody(String expectedBody) {
 		
-		//if the expectedBody is null the expectedBodyPattern will be null (we consider this in the validation)
 		if (expectedBody == null || expectedBody.isEmpty()) {
-			this.expectedBodyPattern = null;
-		} else {	
-			this.expectedBodyPattern = Pattern.compile(expectedBody);
+			expectedBody = "";
 		}
 		
+		this.expectedBodyPattern = Pattern.compile(expectedBody);
 	}
 
 	public int getResponseCode() {
@@ -304,13 +299,6 @@ public class SimulatorResponse {
 	}
 
 	private boolean isBodyValid(String body) {
-		/**
-		 * for empty body we set the 'expectedBodyPattern' to be null
-		 */
-		if (expectedBodyPattern == null) {
-			return StringUtils.isEmpty(body);
-		} 
-		
 		return expectedBodyPattern.matcher(body).matches();
 	}
 
