@@ -121,7 +121,7 @@ public class SimulatorConfigurationResource {
 			return Response.status(Status.BAD_REQUEST).entity(msg).build();
 		}
 		SimulatorResponse simulatorResponse;
-		 boolean added = false;;
+		boolean added = false;;
 		 
 		if (StringUtils.isEmpty(simulatorResponseStr)) {
 			String msg = "When adding a response to an existing simulator you need to specify the response json in the body." +
