@@ -302,9 +302,13 @@ public class SimulatorResponse {
 	}
 
 	private boolean isBodyValid(String body) {
-		//remove all the 'new-lines' from the body
-		String bodyWithOutNewLines = body.replaceAll("[\\r\\n]+", "");
-		return expectedBodyPattern.matcher(bodyWithOutNewLines).matches();
+		if (expectedBodyPattern != null) {
+			//remove all the 'new-lines' from the body
+			String bodyWithOutNewLines = body.replaceAll("[\\r\\n]+", "");
+			return expectedBodyPattern.matcher(bodyWithOutNewLines).matches();
+		}
+		else
+			return true;
 	}
 
 	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {
