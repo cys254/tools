@@ -299,7 +299,9 @@ public class SimulatorResponse {
 	}
 
 	private boolean isBodyValid(String body) {
-		return expectedBodyPattern.matcher(body).matches();
+		//remove all the 'new-lines' from the body
+		String bodyWithOutNewLines = body.replaceAll("[\\r\\n]+", "");
+		return expectedBodyPattern.matcher(bodyWithOutNewLines).matches();
 	}
 
 	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {

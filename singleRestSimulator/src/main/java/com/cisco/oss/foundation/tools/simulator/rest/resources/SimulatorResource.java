@@ -68,7 +68,9 @@ public class SimulatorResource {
 		
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.GET, httpServletRequest, uriInfo, headers, body);
 
-		return rb.build();
+		Response response = rb.build();
+		logResponse(HttpMethod.GET, response);
+		return response;
 	
 	}
 
@@ -79,8 +81,9 @@ public class SimulatorResource {
 		
 		logMethod(HttpMethod.PUT, uriInfo, body);
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.PUT, httpServletRequest, uriInfo, headers, body);
-		
-		return rb.build();
+		Response response = rb.build();
+		logResponse(HttpMethod.PUT, response);
+		return response;
 	}
 
 	@POST
@@ -92,7 +95,9 @@ public class SimulatorResource {
 		
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.POST, httpServletRequest, uriInfo, headers, body);
 
-		return rb.build();
+		Response response = rb.build();
+		logResponse(HttpMethod.POST, response);
+		return response;
 	}
 
 	@DELETE
@@ -103,7 +108,9 @@ public class SimulatorResource {
 		logMethod(HttpMethod.DELETE, uriInfo, body);
 		ResponseBuilder rb = simulatorService.retrieveResponse(HttpMethod.DELETE, httpServletRequest, uriInfo, headers, body);
 
-		return rb.build();
+		Response response = rb.build();
+		logResponse(HttpMethod.DELETE, response);
+		return response;
 	}
 	
 	private void logMethod(String method, UriInfo uriInfo, String body) {
@@ -119,6 +126,10 @@ public class SimulatorResource {
 		
 	}
 
+	private void logResponse(String method, Response response) {
+		logger.debug("response for " + method + " method: " + response.getStatus());	
+	}
+	
 	private String getQueryParamsStringForLogging(MultivaluedMap<String, String> multivaluedMap) {
 		
 		StringBuilder sb = new StringBuilder();
