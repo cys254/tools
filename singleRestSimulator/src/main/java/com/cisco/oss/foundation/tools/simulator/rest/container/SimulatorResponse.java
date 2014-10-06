@@ -52,7 +52,10 @@ public class SimulatorResponse {
 	}
 
 	public String getExpectedBody() {
-		return expectedBodyPattern.pattern();
+		if (expectedBodyPattern != null)
+			return expectedBodyPattern.pattern();
+		else 
+			return "";
 	}
 
 	public void setExpectedBody(String expectedBody) {

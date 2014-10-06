@@ -137,8 +137,9 @@ public class SimulatorConfigurationResource {
 			String fileName = StringUtils.right(simulatorResponseStr, simulatorResponseStr.length() - 5);
 			added = addResponsesFromSpecificFile(port, fileName);
 		} else {	
-			try {
+			try {				
 				simulatorResponse = objectMapper.readValue(simulatorResponseStr, SimulatorResponse.class);
+				logger.debug("Request added to simulator:\n" + simulatorResponseStr);
 			} catch (Exception e) {
 				logger.error("failed parsing json request", e);
 				return Response.status(Status.INTERNAL_SERVER_ERROR).build();
