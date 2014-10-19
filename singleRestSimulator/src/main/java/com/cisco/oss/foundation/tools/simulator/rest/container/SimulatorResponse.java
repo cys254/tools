@@ -55,11 +55,12 @@ public class SimulatorResponse {
 		this.expectedHeaders = expectedHeaders;
 	}
 
-	public String getExpectedBody() {
-		if (expectedBodyPattern != null)
+	public String getExpectedBody() { 
+		if (expectedBodyPattern != null) {
 			return expectedBodyPattern.pattern();
-		else 
+		} else {
 			return "";
+		}
 	}
 
 	public void setExpectedBody(String expectedBody) {
@@ -295,9 +296,9 @@ public class SimulatorResponse {
 			//remove all the 'new-lines' from the body
 			String bodyWithOutNewLines = body.replaceAll("[\\r\\n]+", "");
 			return expectedBodyPattern.matcher(bodyWithOutNewLines).matches();
-		}
-		else
+		} else {		
 			return true;
+		}
 	}
 
 	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {
