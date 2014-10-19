@@ -30,9 +30,13 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimulatorResponse {
 
+	private Logger logger =  LoggerFactory.getLogger(SimulatorResponse.class);
+	
 	private String expectedMethod;
 	private Map<String, List<Pattern>> expectedQueryParams;
 	private Map<String, String> expectedHeaders;
@@ -192,23 +196,8 @@ public class SimulatorResponse {
 	 * if the path is valid - the simulator will already replace the 
 	 * response with the path params of the url
 	 */
-	private boolean isPathValid(String actualPath) {
-		
+	private boolean isPathValid(String actualPath) {		
 		return expectedUrlPattern.matcher(actualPath).matches();
-
-		/*if (m.find()) {
-			int matches = m.groupCount();
-			
-			//begin from 1 (0 is all the string)
-			for (int i=1; i < matches+1; i++) {		
-				responseBody = StringUtils.replace(responseBody, "{$" + i + "}",  m.group(i));
-			}
-		
-			return true;
-		} else {
-			return false;
-		}
-	*/
 	}
 
 	private boolean isHeadersValid(MultivaluedMap<String, String> actualHeaders) {
@@ -232,7 +221,7 @@ public class SimulatorResponse {
 
 	private boolean areAllQueryParamsValid(MultivaluedMap<String, String> actualQueryParams) {
 		
-		//run on all query-param s and check if the url has them
+		//run on all query-params and check if the url has them
 		for (String expectedQueryKey : expectedQueryParams.keySet()) {
 			
 			List<String> actualQueryValues = actualQueryParams.get(expectedQueryKey);
@@ -305,6 +294,12 @@ public class SimulatorResponse {
 	}
 
 	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {
+	
+		try {
+			Thread.sleep(latencyMs);
+		} catch (InterruptedException e) {
+			logger.error("Failed sleeping", e);
+		}
 		
 		ResponseBuilder rb = Response.status(responseCode);
 		
@@ -334,6 +329,7 @@ public class SimulatorResponse {
 				rb.header(headerKey, responseHeaders.get(headerKey));
 			}
 		}
+
 		return rb;
 	}
 
