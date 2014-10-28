@@ -1,0 +1,46 @@
+ [
+    {
+        "expectedMethod": "POST",
+        "expectedQueryParams": null,
+        "expectedHeaders": null,
+        "responseCode": 200,
+        "responseHeaders": null,
+        "responseBody": null,
+        "latencyMs": 0,
+        "expectedUrlPattern": "Cisco/setupRecordings",
+        "expectedBody": ""
+    },
+    {
+        "expectedMethod": "POST",
+        "expectedQueryParams": null,
+        "expectedHeaders": null,
+        "responseCode": 200,
+        "responseHeaders": null,
+        "responseBody": null,
+        "latencyMs": 0,
+        "expectedUrlPattern": "Cisco/deleteRecordings",
+        "expectedBody": ""
+    },
+    {
+        "expectedMethod": "POST",
+        "expectedQueryParams": null,
+        "expectedHeaders": null,
+        "responseCode": 200,
+        "responseHeaders": null,
+        "responseBody": null,
+        "latencyMs": 0,
+        "expectedUrlPattern": "Cisco/stopRecordings",
+        "expectedBody": ""
+    },
+    {
+        "expectedMethod": "POST",
+        "expectedQueryParams": null,
+       "expectedHeaders": null,
+        "responseCode": 200,
+        "responseHeaders": null,
+        "responseBody": null,
+        "latencyMs": 0,
+        "expectedUrlPattern": "Cisco/modifyRecordingDuration",
+        "expectedBody": ""
+    }
+]

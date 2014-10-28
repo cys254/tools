@@ -332,7 +332,7 @@ public class SimulatorResponse {
 			rb = rb.entity(currentResponseBody);
 		} 	
 		
-		if (responseHeaders != null){
+		if (responseHeaders != null) {
 			for (String headerKey : responseHeaders.keySet()) {
 				rb.header(headerKey, responseHeaders.get(headerKey));
 			}
