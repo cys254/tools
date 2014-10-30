@@ -52,7 +52,7 @@ public class SimulatorResource {
 
 	private static Logger logger = LoggerFactory.getLogger(SimulatorResource.class);
 	
-	private static final String subResourcesPath = "{subResources: [:!a-zA-Z0-9~%_/-]+}";
+	private static final String subResourcesPath = "{subResources: [.:!a-zA-Z0-9~%_/-]+}";
 	private SimulatorService simulatorService;
 
 	public SimulatorResource() {
