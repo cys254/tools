@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cisco.oss.foundation.tools</groupId>
     <artifactId>singleRestSimulator</artifactId>
-    <version>2.0.1-1-SNAPSHOT</version>
+    <version>2.0.1-1</version>
     <packaging>jar</packaging>
 	<licenses>
 		<license>
@@ -41,7 +41,7 @@
 		<connection>scm:git:git@github.com:foundation-runtime/tools.git</connection>
 		<developerConnection>scm:git:git@github.com:foundation-runtime/tools.git</developerConnection>
 		<url>https://github.com/foundation-runtime/tools.git</url>
-		<tag>HEAD</tag>
+		<tag>singleRestSimulator-2.0.1-1</tag>
 	</scm>
 
 	<url>https://github.com/foundation-runtime/tools/tree/master/singleRestSimulator</url>
