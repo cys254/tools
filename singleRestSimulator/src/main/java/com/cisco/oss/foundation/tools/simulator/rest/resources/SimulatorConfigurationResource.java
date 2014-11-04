@@ -157,6 +157,23 @@ public class SimulatorConfigurationResource {
 		return rb.build();
 	}
 
+	@DELETE
+	@Path("/clearRequests")
+	public Response resetAllRequests(@PathParam("port") final int port) {
+		if (!simulatorService.simulatorExists(port)) {
+			String msg = "can not clear requests of simulator. simulator on port " + port +  " doesn't exist";
+			logger.error(msg);
+			return Response.status(Status.BAD_REQUEST).entity(msg).build();
+		}
+		
+		try {
+			simulatorService.clearAllRequests(port);
+		} catch (Exception e) {
+			logger.error("failed to clear all request for simulator on port " + port, e);
+		}
+		return Response.status(Status.OK).entity("All requests for simulator on port " + port + " were reset").build();
+	}
+	
 	@GET
 	public Response getSimulator(@PathParam("port") final int port) {
 		if (!simulatorService.simulatorExists(port)) {

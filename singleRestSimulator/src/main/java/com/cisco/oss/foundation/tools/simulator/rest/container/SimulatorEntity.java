@@ -55,6 +55,10 @@ public class SimulatorEntity {
 		this.simulatorResponses = simulatorResponses;
 	}
 
+	public void clearSimulatorResponses() {
+		simulatorResponses.clear();
+	}
+	
 	public void addRequestToQueue(SimulatorRequest simulatorRequest) {
 		allRequests.add(0, simulatorRequest);
 	}

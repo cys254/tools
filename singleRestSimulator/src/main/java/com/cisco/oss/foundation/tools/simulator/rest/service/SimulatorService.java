@@ -134,6 +134,19 @@ public class SimulatorService {
 		return true;
 	}
 
+	public void clearAllRequests(int port) throws Exception {
+		
+		if (!simulatorExists(port)) {
+			logger.debug("there is no simulator on port " + port);
+			return;
+		}
+		
+		simulators.get(port).clearSimulatorResponses();
+		
+		logger.debug("All requests for simulator on port \" + port + \" were cleared");
+	}
+
+	
 	public void deleteSimulator(int port) throws Exception {
 		
 		if (!simulatorExists(port)) {
