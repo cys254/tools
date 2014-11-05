@@ -156,24 +156,36 @@ public class SimulatorConfigurationResource {
 		}
 		return rb.build();
 	}
-
-	@DELETE
-	@Path("/clearRequests")
-	public Response resetAllRequests(@PathParam("port") final int port) {
+	
+	@PUT
+	@Consumes({ MediaType.TEXT_PLAIN })
+	public Response clearSimulator(@PathParam("port") final int port, final String operation) {
+	
 		if (!simulatorService.simulatorExists(port)) {
 			String msg = "can not clear requests of simulator. simulator on port " + port +  " doesn't exist";
 			logger.error(msg);
 			return Response.status(Status.BAD_REQUEST).entity(msg).build();
 		}
 		
-		try {
-			simulatorService.clearAllRequests(port);
-		} catch (Exception e) {
-			logger.error("failed to clear all request for simulator on port " + port, e);
+		if (StringUtils.isEmpty(operation)) {
+			return Response.status(Status.BAD_REQUEST).entity("request must contain a body. valid body: 'clear'").build();
 		}
-		return Response.status(Status.OK).entity("All requests for simulator on port " + port + " were reset").build();
-	}
+		
+		ResponseBuilder rb;
+		if (operation.equalsIgnoreCase("clear")) {
+			try {
+				simulatorService.clearAllRequests(port);
+			} catch (Exception e) {
+				logger.error("failed to clear all request for simulator on port " + port, e);
+			}
+			rb = Response.status(Status.OK).entity("All requests for simulator on port " + port + " were reset");
+		} else {
+			rb = Response.status(Status.BAD_REQUEST).entity("valid body is 'clear'");
+		}
 	
+		return rb.build();
+	}
+
 	@GET
 	public Response getSimulator(@PathParam("port") final int port) {
 		if (!simulatorService.simulatorExists(port)) {
