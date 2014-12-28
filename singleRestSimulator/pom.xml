@@ -67,7 +67,6 @@
 
 	<properties>
 		<jdkLevel>1.7</jdkLevel>
-		<jetty.version>2.5.1</jetty.version>
 		<jersey.version>2.6</jersey.version>
 	</properties>
 	<build>
@@ -128,11 +127,6 @@
 		</pluginManagement>
 	</build>
 	<dependencies>
-       <!-- <dependency>
-            <groupId>org.glassfish.jersey.containers.glassfish</groupId>
-            <artifactId>jersey-gf-cdi</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-common</artifactId>
@@ -176,7 +170,7 @@
 		<dependency>
 			<groupId>com.cisco.oss.foundation</groupId>
 			<artifactId>configuration-lib</artifactId>
-			<version>1.0.0-1</version>
+			<version>1.0.2-4</version>
 		</dependency>
 		 <dependency>
 			<groupId>org.springframework</groupId>
@@ -186,7 +180,7 @@
 		<dependency>
 			<groupId>com.cisco.oss.foundation</groupId>
 			<artifactId>http-server-jetty</artifactId>
-			<version>1.0.0-2</version>
+			<version>1.0.1-1</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>

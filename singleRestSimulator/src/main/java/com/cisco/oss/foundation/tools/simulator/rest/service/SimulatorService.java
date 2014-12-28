@@ -143,7 +143,7 @@ public class SimulatorService {
 		
 		simulators.get(port).clearSimulatorResponses();
 		
-		logger.debug("All requests for simulator on port \" + port + \" were cleared");
+		logger.debug("All requests for simulator on port " + port + " were cleared");
 	}
 
 	
@@ -153,8 +153,7 @@ public class SimulatorService {
 			logger.debug("there is no simulator on port " + port);
 			return;
 		}
-//		SimulatorEntity simulatorEntity = simulators.get(port);
-		
+
 		String serverName = "ServerSim_" + port;
 		
 		JettyHttpServerFactory.INSTANCE.stopHttpServer(serverName);
