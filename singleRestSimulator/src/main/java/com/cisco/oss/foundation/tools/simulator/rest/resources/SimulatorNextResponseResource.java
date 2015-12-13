@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Cisco Systems, Inc.
+ * Copyright 2016 Cisco Systems, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,6 @@ import com.cisco.oss.foundation.tools.simulator.rest.service.SimulatorService;
 
 /**
  * this is the resource of the next-response of the simulator
- *
  */
 @Component
 @Path("/simulator/{port}/nextResponse")

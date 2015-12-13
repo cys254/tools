@@ -16,3 +16,8 @@ hs_err_pid*
 *.zip
 singleRestSimulator/target/*/*.*
 
+singleRestSimulator/target/classes/META-INF/applicationContext.xml
+singleRestSimulator/target/classes/META-INF/applicationContext.xml
+singleRestSimulator/target/classes/responses/defaultResponses.json
+singleRestSimulator/target/classes/responses/myResponses.json
+singleRestSimulator/target/test-classes/config.properties
