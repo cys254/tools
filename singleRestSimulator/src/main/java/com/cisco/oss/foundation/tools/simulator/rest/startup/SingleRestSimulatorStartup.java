@@ -31,7 +31,8 @@ import javax.servlet.Servlet;
 import java.util.*;
 
 public final class SingleRestSimulatorStartup {
-    private static final String SINGLE_REST_SIMULATOR = "restSimulator";
+	
+    public static final String SINGLE_REST_SIMULATOR = "restSimulator";
     private static Logger logger = Logger.getLogger(SingleRestSimulatorStartup.class.getName());
 
     public static void main(final String[] args) {
@@ -64,7 +65,7 @@ public final class SingleRestSimulatorStartup {
             eventListeners.add(new RequestContextListener());
 
             JettyHttpServerFactory.INSTANCE.startHttpServer(SINGLE_REST_SIMULATOR, servlets, filters, eventListeners, initParams);
-
+        
 //			ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 //					"META-INF/applicationContext.xml");
 //			server = (Server) applicationContext.getBean("restSimJettyServer");

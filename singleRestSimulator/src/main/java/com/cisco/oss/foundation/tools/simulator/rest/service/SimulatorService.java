@@ -37,6 +37,7 @@ import com.cisco.oss.foundation.http.server.jetty.JettyHttpServerFactory;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorEntity;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorRequest;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse;
+import com.cisco.oss.foundation.tools.simulator.rest.startup.SingleRestSimulatorStartup;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 
@@ -63,8 +64,12 @@ public class SimulatorService {
 	public boolean addSimulator(int port) throws Exception {
 		
 		String serverName = "ServerSim_" + port;
-		
+		String requestValidityEnabledConfigPreffix = ".http.requestValidityFilter.isEnabled";
 		ConfigurationFactory.getConfiguration().setProperty(serverName + ".http.port", port);
+		
+		boolean isRequestValidityFilterEnabled = 
+				ConfigurationFactory.getConfiguration().getBoolean(SingleRestSimulatorStartup.SINGLE_REST_SIMULATOR + requestValidityEnabledConfigPreffix);
+		ConfigurationFactory.getConfiguration().setProperty(serverName + requestValidityEnabledConfigPreffix, isRequestValidityFilterEnabled);
 
 		if (simulatorExists(port)) {
 			logger.error("simulator on port " + port + " already exists");
@@ -81,19 +86,6 @@ public class SimulatorService {
 		
 		JettyHttpServerFactory.INSTANCE.startHttpServer(serverName, servlets);
 		
-//		Server server = new Server(port);
-//
-//		Context root = new Context(server, "/", Context.SESSIONS);
-//        ServletHolder holder = new ServletHolder(servletContainer);
-//		root.addServlet(holder, "/");
-//		try {
-//			server.start();
-//		} catch (BindException e) {
-//			logger.error("can't create simulator", e);
-//			return false;
-//		}
-//        holder.setInitParameter("port", Integer.toString(port));
-
 		logger.debug("simulator was added on port:" + port);
 
 		SimulatorEntity simulatorEntity = new SimulatorEntity(port);
