@@ -25,6 +25,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import com.cisco.oss.foundation.configuration.ConfigurationFactory;
+
 public class SimulatorEntity {
 
 	private int port;
@@ -60,6 +62,13 @@ public class SimulatorEntity {
 	}
 	
 	public void addRequestToQueue(SimulatorRequest simulatorRequest) {
+		
+		int maxQueueSize = ConfigurationFactory.getConfiguration().getInteger("restSimulator.queue.maxSize", 100);
+		
+		//remove the last one if we are out of space....
+		if (maxQueueSize <= allRequests.size()) {		
+			allRequests.remove(allRequests.size() -1);
+		}
 		allRequests.add(0, simulatorRequest);
 	}
 
