@@ -65,7 +65,7 @@ public class SimulatorEntity {
 		
 		int maxQueueSize = ConfigurationFactory.getConfiguration().getInteger("restSimulator.queue.maxSize", 100);
 		
-		//remove the last one if we are out of space....
+		//remove the last one if we are out of space...
 		if (maxQueueSize <= allRequests.size()) {		
 			allRequests.remove(allRequests.size() -1);
 		}
