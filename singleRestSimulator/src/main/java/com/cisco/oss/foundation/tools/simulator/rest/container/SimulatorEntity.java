@@ -24,11 +24,15 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cisco.oss.foundation.configuration.ConfigurationFactory;
 
 public class SimulatorEntity {
 
+	private static Logger logger = LoggerFactory.getLogger(SimulatorEntity.class);
+	
 	private int port;
 	private List<SimulatorResponse> simulatorResponses;
 	private List<SimulatorRequest> allRequests;
@@ -115,17 +119,25 @@ public class SimulatorEntity {
 			simulatorNextResponse = null;
 		} else {
 			
-			List<SimulatorResponse> urls = getSimulatorResponses();
+			List<SimulatorResponse> simulatorResponses = getSimulatorResponses();
 			
-			if (CollectionUtils.isEmpty(urls)) {
+			if (CollectionUtils.isEmpty(simulatorResponses)) {
 				return Response.status(Status.NOT_FOUND);
 			}
 			
-			for (SimulatorResponse simulatorResponse : urls) {		
+			long start = System.currentTimeMillis();
+			for (SimulatorResponse simulatorResponse : simulatorResponses) {		
 				if (simulatorResponse.isRequestValid(simulatorRequest)) {
 					rb = simulatorResponse.generateResponse(simulatorRequest);
 					break;
 				}
+			}
+			long end = System.currentTimeMillis();
+			int numOfResponses = simulatorResponses.size();
+			
+			if (logger.isDebugEnabled()) {
+				logger.debug("found response | time for finding the response = " + (end -start) + 
+						" milli | number of responses in simulator = " + numOfResponses);
 			}
 		}
 		

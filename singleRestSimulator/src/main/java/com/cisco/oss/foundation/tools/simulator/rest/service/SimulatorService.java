@@ -178,8 +178,10 @@ public class SimulatorService {
 		SimulatorRequest simulatorRequest = new SimulatorRequest(method, path, uriInfo.getQueryParameters(),
 				headers.getRequestHeaders(), body);
 		
-		if (ConfigurationFactory.getConfiguration().getBoolean("restSimulator.queue.enable", true)) {		
-			simulator.addRequestToQueue(simulatorRequest);
+		if (ConfigurationFactory.getConfiguration().getBoolean("restSimulator.queue.enable", true)) {	
+			if (simulatorRequest != null) {
+				simulator.addRequestToQueue(simulatorRequest);
+			}
 		}
 		
 		return simulator.generateResponse(simulatorRequest);
