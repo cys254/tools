@@ -20,11 +20,10 @@ import com.cisco.oss.foundation.http.server.jetty.JettyHttpServerFactory;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletContainer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -45,26 +44,19 @@ public final class SingleRestSimulatorStartup {
             ListMultimap<String, Servlet> servlets = ArrayListMultimap.create();
             ListMultimap<String, Filter> filters = ArrayListMultimap.create();
 
-            // Set the init params
-            Map<String, String> initParams = new HashMap<String, String>();
-            initParams.put("com.sun.jersey.config.property.packages",
-                    "com.cisco.oss.foundation.tools");
+            XmlWebApplicationContext webConfig = new XmlWebApplicationContext();
+            webConfig.setConfigLocation("classpath:META-INF/restSimulatorContext.xml");
+            webConfig.registerShutdownHook();
 
             // Create the servlet
-            ResourceConfig resourceConfig = new ResourceConfig();
-            resourceConfig.packages("com.cisco.oss.foundation.tools");
-            ServletContainer resourceServlet = new ServletContainer(resourceConfig);
-            servlets.put("/*", resourceServlet);
+            servlets.put("/", new DispatcherServlet(webConfig));
 
-			XmlWebApplicationContext webConfig = new XmlWebApplicationContext();
-			webConfig.setConfigLocation("classpath:META-INF/restSimulatorContext.xml");
-			webConfig.registerShutdownHook();
 
             List<EventListener> eventListeners = new ArrayList<EventListener>();
             eventListeners.add(new ContextLoaderListener(webConfig));
             eventListeners.add(new RequestContextListener());
 
-            JettyHttpServerFactory.INSTANCE.startHttpServer(SINGLE_REST_SIMULATOR, servlets, filters, eventListeners, initParams);
+            JettyHttpServerFactory.INSTANCE.startHttpServer(SINGLE_REST_SIMULATOR, servlets, filters, eventListeners);
         
 //			ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 //					"META-INF/applicationContext.xml");

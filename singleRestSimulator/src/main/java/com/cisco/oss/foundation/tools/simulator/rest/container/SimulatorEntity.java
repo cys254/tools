@@ -19,15 +19,13 @@ package com.cisco.oss.foundation.tools.simulator.rest.container;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cisco.oss.foundation.configuration.ConfigurationFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 
 public class SimulatorEntity {
 
@@ -111,24 +109,23 @@ public class SimulatorEntity {
 		this.allRequests = allRequests;
 	}
 
-	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {
-		ResponseBuilder rb = null;
-		
+	public ResponseEntity generateResponse(SimulatorRequest simulatorRequest) {
+		ResponseEntity re  = null;
 		if (simulatorNextResponse != null) {
-			rb = simulatorNextResponse.generateResponse(simulatorRequest);
+			re = simulatorNextResponse.generateResponse(simulatorRequest);
 			simulatorNextResponse = null;
 		} else {
 			
 			List<SimulatorResponse> simulatorResponses = getSimulatorResponses();
 			
 			if (CollectionUtils.isEmpty(simulatorResponses)) {
-				return Response.status(Status.NOT_FOUND);
+				return ResponseEntity.notFound().build();
 			}
 			
 			long start = System.currentTimeMillis();
 			for (SimulatorResponse simulatorResponse : simulatorResponses) {		
 				if (simulatorResponse.isRequestValid(simulatorRequest)) {
-					rb = simulatorResponse.generateResponse(simulatorRequest);
+					re = simulatorResponse.generateResponse(simulatorRequest);
 					break;
 				}
 			}
@@ -141,10 +138,10 @@ public class SimulatorEntity {
 			}
 		}
 		
-		if (rb == null) {
-			rb = Response.status(Status.NOT_FOUND);
+		if (re == null) {
+			re = ResponseEntity.notFound().build();
 		}
-		return rb;
+		return re;
 	}
 
 	public SimulatorResponse getSimulatorNextResponse() {

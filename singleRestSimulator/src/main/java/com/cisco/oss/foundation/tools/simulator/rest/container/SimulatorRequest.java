@@ -16,18 +16,23 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.container;
 
-import javax.ws.rs.core.MultivaluedMap;
+
+import com.google.common.collect.Multimap;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.MultiValueMap;
+
+import java.util.List;
 
 public class SimulatorRequest {
 
 	private String method;
 	private String path;
-	private MultivaluedMap<String, String> queryParameters;
-	private MultivaluedMap<String, String> requestHeaders;
+	private MultiValueMap<String, String> queryParameters;
+	private HttpHeaders requestHeaders;
 	private String body;
 	
-	public SimulatorRequest(String method, String path, MultivaluedMap<String, String> queryParameters,
-			MultivaluedMap<String, String> requestHeaders, String body) {
+	public SimulatorRequest(String method, String path, MultiValueMap<String, String> queryParameters,
+							HttpHeaders requestHeaders, String body) {
 		
 		this.method = method;
 		this.path = path;
@@ -52,19 +57,19 @@ public class SimulatorRequest {
 		this.path = path;
 	}
 
-	public MultivaluedMap<String, String> getQueryParameters() {
+	public MultiValueMap<String, String> getQueryParameters() {
 		return queryParameters;
 	}
 
-	public void setQueryParameters(MultivaluedMap<String, String> queryParameters) {
+	public void setQueryParameters(MultiValueMap<String, String> queryParameters) {
 		this.queryParameters = queryParameters;
 	}
 
-	public MultivaluedMap<String, String> getRequestHeaders() {
+	public HttpHeaders getRequestHeaders() {
 		return requestHeaders;
 	}
 
-	public void setRequestHeaders(MultivaluedMap<String, String> requestHeaders) {
+	public void setRequestHeaders(HttpHeaders requestHeaders) {
 		this.requestHeaders = requestHeaders;
 	}
 
@@ -80,14 +85,10 @@ public class SimulatorRequest {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		
-		String queryParametersString = "";
-		for ( String paramKey : queryParameters.keySet())
-			queryParametersString += paramKey + "=" + queryParameters.get(paramKey) + ", ";
-		
-		builder.append("Method: " + method + System.lineSeparator() + 
+		builder.append("Method: " + method + System.lineSeparator() +
 				"Path: " + path + System.lineSeparator() +
 				"Body: " + body + System.lineSeparator() + 
-				"Query Parameters: " + queryParametersString + System.lineSeparator());
+				"Query Parameters: " + queryParameters + System.lineSeparator());
 		
 		return builder.toString();
 	}

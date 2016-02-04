@@ -16,22 +16,20 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.container;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.util.MultiValueMap;
 
 public class SimulatorResponse {
 
@@ -204,26 +202,26 @@ public class SimulatorResponse {
 		return expectedUrlPattern.matcher(actualPath).matches();
 	}
 
-	private boolean isHeadersValid(MultivaluedMap<String, String> actualHeaders) {
+	private boolean isHeadersValid(HttpHeaders actualHeaders) {
 		
-		if (MapUtils.isEmpty(expectedHeaders)) {
+		if (expectedHeaders == null || expectedHeaders.isEmpty()) {
 			return true;
 		}
 		
 		return areAllValuesInMultimap(expectedHeaders, actualHeaders);
 	}
 	
-	private boolean isQueryParamsValid(MultivaluedMap<String, String> actualQueryParams) {
+	private boolean isQueryParamsValid(MultiValueMap<String, String> actualQueryParams) {
 
 		//no params are expected - return true
-		if (MapUtils.isEmpty(expectedQueryParams)) {
+		if (expectedQueryParams == null || expectedQueryParams.isEmpty()) {
 			return true;
 		}
 
 		return areAllQueryParamsValid(actualQueryParams);
 	}
 
-	private boolean areAllQueryParamsValid(MultivaluedMap<String, String> actualQueryParams) {
+	private boolean areAllQueryParamsValid(MultiValueMap<String, String> actualQueryParams) {
 		
 		//run on all query-params and check if the url has them
 		for (String expectedQueryKey : expectedQueryParams.keySet()) {
@@ -272,7 +270,7 @@ public class SimulatorResponse {
 		return false;
 	}
 
-	private boolean areAllValuesInMultimap(Map<String, String> expectedMap, MultivaluedMap<String, String> multiMap) {
+	private boolean areAllValuesInMultimap(Map<String, String> expectedMap, HttpHeaders multiMap) {
 		
 		for (String expectedHeaderKey : expectedMap.keySet()) {
 			List<String> actualHeaderValues = multiMap.get(expectedHeaderKey);
@@ -301,16 +299,16 @@ public class SimulatorResponse {
 		}
 	}
 
-	public ResponseBuilder generateResponse(SimulatorRequest simulatorRequest) {
+	public ResponseEntity generateResponse(SimulatorRequest simulatorRequest) {
 	
 		try {
 			Thread.sleep(latencyMs);
 		} catch (InterruptedException e) {
 			logger.error("Failed sleeping", e);
 		}
-		
-		ResponseBuilder rb = Response.status(responseCode);
-		
+
+		ResponseEntity.BodyBuilder builder = ResponseEntity.status(responseCode);
+		ResponseEntity re = null;
 		if (!StringUtils.isEmpty(responseBody)) {	
 			String currentResponseBody = responseBody;
 			
@@ -322,29 +320,29 @@ public class SimulatorResponse {
 				for (int i=1; i < matches+1; i++) {		
 					currentResponseBody = StringUtils.replace(currentResponseBody, "{$" + i + "}",  matcher.group(i));
 				}
-			} 
-			
-			MultivaluedMap<String, String> queryParameters = simulatorRequest.getQueryParameters();
+			}
+
+			MultiValueMap queryParameters = simulatorRequest.getQueryParameters();
 			
 			//replace query params
 			currentResponseBody = replaceAllQueryParamsInReponse(currentResponseBody, queryParameters);
 			
-			rb = rb.entity(currentResponseBody);
+			re = builder.body(currentResponseBody);
 		} 	
 		
 		if (responseHeaders != null) {
 			for (String headerKey : responseHeaders.keySet()) {
-				rb.header(headerKey, responseHeaders.get(headerKey));
+				re.getHeaders().add(headerKey, responseHeaders.get(headerKey));
 			}
 		}
 
-		return rb;
+		return re;
 	}
 
 	private String replaceAllQueryParamsInReponse(String currentResponseBody,
-			MultivaluedMap<String, String> actualQueryParams) {
+												  MultiValueMap<String, String> actualQueryParams) {
 
-		if (MapUtils.isEmpty(actualQueryParams) || MapUtils.isEmpty(expectedQueryParams)) {
+		if ((actualQueryParams == null || actualQueryParams.isEmpty()) || (expectedQueryParams == null || expectedQueryParams.isEmpty())) {
 			return currentResponseBody;
 		}
 		
