@@ -14,46 +14,51 @@
  *  limitations under the License.
  */
 
-package com.cisco.oss.foundation.tools.simulator.rest.resources;
-
-import java.util.List;
+package com.cisco.oss.foundation.tools.simulator.rest.sub_resources;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
 import com.cisco.oss.foundation.tools.simulator.rest.service.SimulatorService;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerMapping;
 
 /**
  * this is the resource of the simulator itself
  * all the REST calls of the simulator will get here
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/**")
 @Scope("request")
 public class SimulatorResource {
 
     private static Logger logger = LoggerFactory.getLogger(SimulatorResource.class);
 
-    private static final String subResourcesPath = "{subResources: [.:!a-zA-Z0-9~%_/-]+}";
+//    private static final String subResourcesPath = "{subResources: [.:!a-zA-Z0-9~%_/-]+}";
     private SimulatorService simulatorService;
 
     public SimulatorResource() {
         simulatorService = SimulatorService.getInstance();
     }
 
-    @RequestMapping(value = subResourcesPath, method = {RequestMethod.GET})
-    public ResponseEntity getResource(HttpServletRequest httpServletRequest, HttpHeaders headers,
-                                      @PathVariable("subResources") String subResources, @RequestParam MultiValueMap<String, String> queryParams, @RequestBody String body) {
+//    @RequestMapping(value = subResourcesPath, method = {RequestMethod.GET})
+    @RequestMapping(method = {RequestMethod.GET})
+    public ResponseEntity getResource(HttpServletRequest httpServletRequest,
+                                      @RequestHeader HttpHeaders headers,
+                                      @RequestParam MultiValueMap<String, String> queryParams,
+                                      @RequestBody(required = false) String body) {
+
+        if (body == null)
+            body = "";
+
+        String subResources = (String) httpServletRequest.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 
         logMethod(RequestMethod.GET.name(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString(), body);
 
@@ -65,9 +70,17 @@ public class SimulatorResource {
 
     }
 
-    @RequestMapping(value = subResourcesPath, method = {RequestMethod.PUT})
-    public ResponseEntity updateResource(HttpServletRequest httpServletRequest, HttpHeaders headers,
-                                         @PathVariable("subResources") String subResources, @RequestParam MultiValueMap<String, String> queryParams, @RequestBody String body) {
+
+//    @RequestMapping(value = subResourcesPath, method = {RequestMethod.PUT})
+    @RequestMapping(method = {RequestMethod.PUT})
+    public ResponseEntity updateResource(HttpServletRequest httpServletRequest,
+                                         @RequestHeader HttpHeaders headers,
+                                         @RequestParam MultiValueMap<String, String> queryParams,
+                                         @RequestBody(required = false) String body) {
+        if (body == null)
+            body = "";
+
+        String subResources = (String) httpServletRequest.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 
         logMethod(RequestMethod.PUT.name(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString(), body);
         ResponseEntity re = simulatorService.retrieveResponse(RequestMethod.PUT.name(), httpServletRequest, headers, queryParams, body);
@@ -75,9 +88,16 @@ public class SimulatorResource {
         return re;
     }
 
-    @RequestMapping(value = subResourcesPath, method = {RequestMethod.POST})
-    public ResponseEntity createResource(HttpServletRequest httpServletRequest, HttpHeaders headers, @RequestParam MultiValueMap<String, String> queryParams,
-                                         @PathVariable("subResources") String subResources, @RequestBody String body) {
+//    @RequestMapping(value = subResourcesPath, method = {RequestMethod.POST})
+    @RequestMapping(method = {RequestMethod.POST})
+    public ResponseEntity createResource(HttpServletRequest httpServletRequest,
+                                         @RequestHeader HttpHeaders headers,
+                                         @RequestParam MultiValueMap<String, String> queryParams,
+                                         @RequestBody(required = false) String body) {
+        if (body == null)
+            body = "";
+
+        String subResources = (String) httpServletRequest.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 
         logMethod(RequestMethod.POST.name(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString(), body);
 
@@ -87,9 +107,16 @@ public class SimulatorResource {
         return re;
     }
 
-    @RequestMapping(value = subResourcesPath, method = {RequestMethod.DELETE})
-    public ResponseEntity deleteResource(HttpServletRequest httpServletRequest, HttpHeaders headers,
-                                         @PathVariable("subResources") String subResources, @RequestParam MultiValueMap<String, String> queryParams, @RequestBody String body) {
+//    @RequestMapping(value = subResourcesPath, method = {RequestMethod.DELETE})
+    @RequestMapping(method = {RequestMethod.DELETE})
+    public ResponseEntity deleteResource(HttpServletRequest httpServletRequest,
+                                         @RequestHeader HttpHeaders headers,
+                                         @RequestParam MultiValueMap<String, String> queryParams,
+                                         @RequestBody(required = false) String body) {
+        if (body == null)
+            body = "";
+
+        String subResources = (String) httpServletRequest.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 
         logMethod(RequestMethod.DELETE.name(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString(), body);
         ResponseEntity re = simulatorService.retrieveResponse(RequestMethod.DELETE.name(), httpServletRequest, headers, queryParams, body);

@@ -16,22 +16,6 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.Servlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.UriInfo;
-
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.cisco.oss.foundation.configuration.ConfigurationFactory;
 import com.cisco.oss.foundation.http.server.jetty.JettyHttpServerFactory;
 import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorEntity;
@@ -40,6 +24,19 @@ import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse
 import com.cisco.oss.foundation.tools.simulator.rest.startup.SingleRestSimulatorStartup;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SimulatorService {
 
@@ -64,26 +61,27 @@ public class SimulatorService {
 	public boolean addSimulator(int port) throws Exception {
 		
 		String serverName = "ServerSim_" + port;
-		String requestValidityEnabledConfigPreffix = ".http.requestValidityFilter.isEnabled";
+		String requestValidityEnabledConfigPrefix = ".http.requestValidityFilter.isEnabled";
 		ConfigurationFactory.getConfiguration().setProperty(serverName + ".http.port", port);
 		
 		boolean isRequestValidityFilterEnabled = 
-				ConfigurationFactory.getConfiguration().getBoolean(SingleRestSimulatorStartup.SINGLE_REST_SIMULATOR + requestValidityEnabledConfigPreffix);
-		ConfigurationFactory.getConfiguration().setProperty(serverName + requestValidityEnabledConfigPreffix, isRequestValidityFilterEnabled);
+				ConfigurationFactory.getConfiguration().getBoolean(SingleRestSimulatorStartup.SINGLE_REST_SIMULATOR + requestValidityEnabledConfigPrefix);
+		ConfigurationFactory.getConfiguration().setProperty(serverName + requestValidityEnabledConfigPrefix, isRequestValidityFilterEnabled);
 
 		if (simulatorExists(port)) {
 			logger.error("simulator on port " + port + " already exists");
 			return false;
 		}
 
-        ResourceConfig resourceConfig = new ResourceConfig();
-        resourceConfig.packages("com.cisco.oss.foundation.tools");
-		
-		ServletContainer servletContainer = new ServletContainer(resourceConfig);
-		
+
 		ListMultimap<String, Servlet> servlets = ArrayListMultimap.create();
-		servlets.put("/*", servletContainer);
-		
+		XmlWebApplicationContext webConfig = new XmlWebApplicationContext();
+		webConfig.setConfigLocation("classpath:META-INF/restSimulatorContext.xml");
+		webConfig.registerShutdownHook();
+
+		// Create the servlet
+		servlets.put("/", new DispatcherServlet(webConfig));
+
 		JettyHttpServerFactory.INSTANCE.startHttpServer(serverName, servlets);
 		
 		logger.debug("simulator was added on port:" + port);
@@ -163,20 +161,20 @@ public class SimulatorService {
 		return simulators.containsKey(port);
 	}
 
-	public ResponseBuilder retrieveResponse(String method, HttpServletRequest httpServletRequest, UriInfo uriInfo, HttpHeaders headers, String body) {
+	public ResponseEntity retrieveResponse(String method, HttpServletRequest httpServletRequest, HttpHeaders headers, MultiValueMap<String, String> queryParams, String body) {
 
         int port = httpServletRequest.getLocalPort();
 		
 		if (!simulatorExists(port)) {
 			logger.error("there is no simulator on port " + port);
-			Response.status(0).build();
+			ResponseEntity.status(0).build();
 		}
 		
 		SimulatorEntity simulator = simulators.get(port);
-		String path = uriInfo.getPath();
+		String path = httpServletRequest.getRequestURI();
 		path = removeFirstAndLastSlashesFromUrl(path);
-		SimulatorRequest simulatorRequest = new SimulatorRequest(method, path, uriInfo.getQueryParameters(),
-				headers.getRequestHeaders(), body);
+		SimulatorRequest simulatorRequest = new SimulatorRequest(method, path, queryParams,
+				headers, body);
 		
 		if (ConfigurationFactory.getConfiguration().getBoolean("restSimulator.queue.enable", true)) {	
 			if (simulatorRequest != null) {

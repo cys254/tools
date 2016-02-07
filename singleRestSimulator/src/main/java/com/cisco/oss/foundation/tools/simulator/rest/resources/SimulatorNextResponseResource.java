@@ -16,32 +16,24 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.resources;
 
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
-
-import org.codehaus.jackson.map.ObjectMapper;
+import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse;
+import com.cisco.oss.foundation.tools.simulator.rest.service.SimulatorService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse;
-import com.cisco.oss.foundation.tools.simulator.rest.service.SimulatorService;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * this is the resource of the next-response of the simulator
  */
-@Component
-@Path("/simulator/{port}/nextResponse")
+@RestController
+@RequestMapping("/simulator/{port}/nextResponse")
 @Scope("request")
 public class SimulatorNextResponseResource {
 
@@ -54,38 +46,38 @@ public class SimulatorNextResponseResource {
 		simulatorService = SimulatorService.getInstance();
 	}
 	
-	@POST
-	public Response updateNextResponseForSimulator(@PathParam("port") final int port, final String simulatorResponseStr) {
+	@RequestMapping(method = {RequestMethod.POST})
+	public ResponseEntity updateNextResponseForSimulator(@PathVariable("port") final int port, @RequestBody final SimulatorResponse simulatorNextResponse) {
 		
 		if (!simulatorService.simulatorExists(port)) {
 			String msg = "can not set next response for simulator. simulator on port " + port +  " doesn't exist";
 			logger.error(msg);
-			return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			return ResponseEntity.badRequest().body(msg);
 		}
-		SimulatorResponse simulatorNextResponse;
-		try {
-			simulatorNextResponse = objectMapper.readValue(simulatorResponseStr, SimulatorResponse.class);
-		} catch (Exception e) {
-			logger.error("failed parsing json request", e);
-			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-		} 
+//		SimulatorResponse simulatorNextResponse;
+//		try {
+//			simulatorNextResponse = objectMapper.readValue(simulatorResponseStr, SimulatorResponse.class);
+//		} catch (Exception e) {
+//			logger.error("failed parsing json request", e);
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
 		boolean added = simulatorService.addNextResponseToSimulator(port, simulatorNextResponse);
 		
-		ResponseBuilder rb;
+		ResponseEntity re;
 		if (added) {
-			rb = Response.ok();
+			re = ResponseEntity.ok().build();
 		} else {
-			rb = Response.status(Status.INTERNAL_SERVER_ERROR);
+			re = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		return rb.build();
+		return re;
 	}
-	
-	@DELETE
-	public Response deleteSimulator(@PathParam("port") final int port) {
+
+	@RequestMapping(method = {RequestMethod.DELETE})
+	public ResponseEntity<String> deleteSimulator(@PathVariable("port") final int port) {
 		if (!simulatorService.simulatorExists(port)) {
 			String msg = "can not delete next response for simulator. simulator on port " + port +  " doesn't exist";
 			logger.error(msg);
-			return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			return ResponseEntity.badRequest().body(msg);
 		}
 		
 		try {
@@ -93,15 +85,15 @@ public class SimulatorNextResponseResource {
 		} catch (Exception e) {
 			logger.error("failed deleting next response for simulator", e);
 		}
-		return Response.status(Status.OK).entity("next response for simulator on port " + port + " was deleted").build();
+		return ResponseEntity.ok("next response for simulator on port " + port + " was deleted");
 	}
 	
-	@GET
-	public Response getSimulator(@PathParam("port") final int port) throws Exception {
+	@RequestMapping(method = {RequestMethod.GET})
+	public ResponseEntity<String> getSimulator(@PathVariable("port") final int port) throws Exception {
 		if (!simulatorService.simulatorExists(port)) {
 			String msg = "can not retrieve simulator. simulator on port " + port +  " doesn't exist";
 			logger.error(msg);
-			return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			return ResponseEntity.badRequest().body(msg);
 		}
 
 		SimulatorResponse simulatorNextResponse = simulatorService.getSimulator(port).getSimulatorNextResponse();
@@ -115,6 +107,6 @@ public class SimulatorNextResponseResource {
 			simulatorNextResponseStr = strWriter.toString();
 		}
 
-		return Response.status(Status.OK).entity(simulatorNextResponseStr).build();
+		return ResponseEntity.ok(simulatorNextResponseStr);
 	}
 }

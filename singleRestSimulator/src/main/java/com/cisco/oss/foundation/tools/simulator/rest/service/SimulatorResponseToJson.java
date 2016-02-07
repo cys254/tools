@@ -16,7 +16,8 @@
 
 package com.cisco.oss.foundation.tools.simulator.rest.service;
 
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.StringWriter;
 import java.io.Writer;
