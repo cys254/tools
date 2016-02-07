@@ -57,6 +57,10 @@ public class SimulatorQueueResource {
 	 * for the last request call /simulator/8888/queue/1
 	 * for the last 6 requests call /simulator/8888/queue/6
 	 * for all the requests call /simulator/8888/queue/all
+	 * @param port port
+	 * @param numOfMessages numOfMessages
+	 * @return ResponseEntity
+	 * @throws Exception exception
 	 */
 	@RequestMapping(value = "/{numOfMessages}", method = {RequestMethod.GET})
 	public ResponseEntity getAllMessagesInQueue(@PathVariable("port") final int port,
@@ -101,6 +105,8 @@ public class SimulatorQueueResource {
 
 	/**
 	 * this function will delete the queue of the requests on this port
+	 * @param port port
+	 * @return ResponseEntity
 	 */
 	@RequestMapping(method = {RequestMethod.DELETE})
 	public ResponseEntity deleteQueue(@PathVariable("port") final int port) {
@@ -116,6 +122,8 @@ public class SimulatorQueueResource {
 
 	/**
 	 * this function will delete the last request from the queue on this port
+	 * @param port port
+	 * @return ResponseEntity
 	 */
 	@RequestMapping(value = "/lastRequest", method = {RequestMethod.DELETE})
 	public ResponseEntity deleteLastRequestFromQueue(@PathVariable("port") final int port) {

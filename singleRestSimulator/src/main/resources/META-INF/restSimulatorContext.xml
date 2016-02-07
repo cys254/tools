@@ -23,18 +23,22 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-	<context:property-placeholder location="classpath:config.properties"/>
-    
-    <context:component-scan base-package="com.cisco.oss.foundation.tools"/>
+    <context:property-placeholder location="classpath:config.properties"/>
+
+    <context:component-scan base-package="com.cisco.oss.foundation.tools.simulator.rest.sub_resources"/>
 
     <mvc:annotation-driven>
         <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="*/*"/>
+            </bean>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="mapper"/>
             </bean>
         </mvc:message-converters>
-        <mvc:async-support default-timeout="15000" />
+        <mvc:async-support default-timeout="15000"/>
     </mvc:annotation-driven>
+
 
     <bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 

@@ -24,7 +24,6 @@ import com.cisco.oss.foundation.tools.simulator.rest.container.SimulatorResponse
 import com.cisco.oss.foundation.tools.simulator.rest.startup.SingleRestSimulatorStartup;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -62,12 +61,12 @@ public class SimulatorService {
 	public boolean addSimulator(int port) throws Exception {
 		
 		String serverName = "ServerSim_" + port;
-		String requestValidityEnabledConfigPreffix = ".http.requestValidityFilter.isEnabled";
+		String requestValidityEnabledConfigPrefix = ".http.requestValidityFilter.isEnabled";
 		ConfigurationFactory.getConfiguration().setProperty(serverName + ".http.port", port);
 		
 		boolean isRequestValidityFilterEnabled = 
-				ConfigurationFactory.getConfiguration().getBoolean(SingleRestSimulatorStartup.SINGLE_REST_SIMULATOR + requestValidityEnabledConfigPreffix);
-		ConfigurationFactory.getConfiguration().setProperty(serverName + requestValidityEnabledConfigPreffix, isRequestValidityFilterEnabled);
+				ConfigurationFactory.getConfiguration().getBoolean(SingleRestSimulatorStartup.SINGLE_REST_SIMULATOR + requestValidityEnabledConfigPrefix);
+		ConfigurationFactory.getConfiguration().setProperty(serverName + requestValidityEnabledConfigPrefix, isRequestValidityFilterEnabled);
 
 		if (simulatorExists(port)) {
 			logger.error("simulator on port " + port + " already exists");
@@ -172,7 +171,7 @@ public class SimulatorService {
 		}
 		
 		SimulatorEntity simulator = simulators.get(port);
-		String path = httpServletRequest.getPathInfo();
+		String path = httpServletRequest.getRequestURI();
 		path = removeFirstAndLastSlashesFromUrl(path);
 		SimulatorRequest simulatorRequest = new SimulatorRequest(method, path, queryParams,
 				headers, body);

@@ -43,28 +43,35 @@ import java.util.List;
  * regular-expressions in path example:
  * 
  * request:
+ * <pre>{@code
  * ...
  * "expectedUrl":"pps/households/(\\w*)/catalog/(\\w*)",
  * "responseBody":"this is the ResponseEntity of for household {$1} catalog-item {$2}. (hh={$1})",
  * ...
+ * }</pre>
  * 
  * 
  * when you'll call the simulator with:
- * 
+ * <pre>{@code
  * http://host:8888/pps/households/1234/catalog/abcde
- * 
+ * }</pre>
  * you'll get:
  * 
  * this is the ResponseEntity of for household 1234 catalog-item abcde. (hh=1234)
- * 
+ * <pre>
  * ******************************************************
+ * </pre>
  * regular-expressions in query params example:
- * "expectedUrl":"pps/households?howAreYou=(\\w*)&areYouSure=(\\w*)"
- * "responseBody":"I am {@howAreYou}. {@areYouSure}, I am sure",
- * 
- * when you'll call the simulator with:
- * 
+ * <pre>{@code
+ * { ...
+ *  "expectedUrl":"pps/households?howAreYou=(\\w*)&areYouSure=(\\w*)",
+ *  "responseBody":"I am {\@howAreYou}. {\@areYouSure}, I am sure",
+ *  ... }
+ *  when you'll call the simulator with:
+ *
  * http://host:8888/pps/households?howAreYou=Sababa&areYouSure=Yes
+ * }</pre>
+ *
  * 
  * you'll get:
  * 

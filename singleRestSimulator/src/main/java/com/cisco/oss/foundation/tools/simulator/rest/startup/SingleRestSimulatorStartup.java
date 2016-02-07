@@ -45,7 +45,7 @@ public final class SingleRestSimulatorStartup {
             ListMultimap<String, Filter> filters = ArrayListMultimap.create();
 
             XmlWebApplicationContext webConfig = new XmlWebApplicationContext();
-            webConfig.setConfigLocation("classpath:META-INF/restSimulatorContext.xml");
+            webConfig.setConfigLocation("classpath:META-INF/mainSimulatorContext.xml");
             webConfig.registerShutdownHook();
 
             // Create the servlet
