@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cisco.oss.foundation.tools</groupId>
-	<artifactId>packet_dumper</artifactId>
+	<artifactId>packet-dumper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>packet_dumper</name>
+	<name>packet-dumper</name>
 	<description>Packet Dumper</description>
 
 	<parent>
