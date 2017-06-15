@@ -55,7 +55,7 @@ public class RabbitMQConnector extends Thread {
             } catch (InterruptedException e) {
                 log.trace(e.toString(), e);
             } catch (JsonProcessingException e) {
-                log.error(e.toString(), e);
+                log.error("Failed to serialize object: {}", e.toString(), e);
             }
         }
     }
