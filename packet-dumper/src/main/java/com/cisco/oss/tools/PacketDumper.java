@@ -36,6 +36,7 @@ public class PacketDumper {
     private static final String DST_PORT = "dstPort";
     private static final String SRC_PORT = "srcPort";
     private static final String R_LINE = "l";
+    private static final String LENGTH = "len";
     private static final String TYPE = "t";
     private static final String SEQUENCE_NUMBER = "seqNum";
     private static final String ACKNOWLEDGMENT_NUMBER = "ackNum";
@@ -101,6 +102,8 @@ public class PacketDumper {
 
                     if (packet instanceof EthernetPacket) {
                         final IpPacket ipPacket = (IpPacket) packet.getPayload();
+
+
                         final InetAddress dstAddr = ipPacket.getHeader().getDstAddr();
                         final InetAddress srcAddr = ipPacket.getHeader().getSrcAddr();
                         data.put(DST_ADDR, dstAddr.getHostAddress());
@@ -109,6 +112,10 @@ public class PacketDumper {
                         final TcpPacket tcpPacket = (TcpPacket) ipPacket.getPayload();
                         final TcpPort dstPort = tcpPacket.getHeader().getDstPort();
                         final TcpPort srcPort = tcpPacket.getHeader().getSrcPort();
+
+                        final int tcpPayloadLength = ipPacket.length() - (20 + tcpPacket.getHeader().getDataOffsetAsInt() * 4);
+                        data.put(LENGTH, tcpPayloadLength);
+
                         data.put(DST_PORT, dstPort.valueAsString());
                         data.put(SRC_PORT, srcPort.valueAsString());
 
