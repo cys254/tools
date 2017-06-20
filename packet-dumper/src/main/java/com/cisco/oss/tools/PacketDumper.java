@@ -116,8 +116,8 @@ public class PacketDumper {
                         final int tcpPayloadLength = ipPacket.length() - (20 + tcpPacket.getHeader().getDataOffsetAsInt() * 4);
                         data.put(LENGTH, tcpPayloadLength);
 
-                        data.put(DST_PORT, dstPort.value());
-                        data.put(SRC_PORT, srcPort.value());
+                        data.put(DST_PORT, dstPort.value().intValue());
+                        data.put(SRC_PORT, srcPort.value().intValue());
 
                         try {
                             String type = REQUEST;
