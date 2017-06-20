@@ -41,8 +41,7 @@ public class KafkaConnector extends Thread {
 
             @Override
             public void onSuccess(SendResult<String, Map<String, Object>> result) {
-                log.info("sent message='{}' with offset={}", message,
-                        result.getRecordMetadata().offset());
+                log.debug("sent message='{}' with offset={}", message, result.getRecordMetadata().offset());
             }
 
             @Override
