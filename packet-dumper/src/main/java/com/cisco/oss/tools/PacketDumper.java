@@ -98,7 +98,7 @@ public class PacketDumper {
                     final Timestamp timestamp = pcapHandle.getTimestamp();
 
                     final Map<String, Object> data = new HashMap<>();
-                    data.put(TIMESTAMP, timestamp.getTime());
+                    data.put(TIMESTAMP, timestamp.getTime()/1000);
 
                     if (packet instanceof EthernetPacket) {
                         final IpPacket ipPacket = (IpPacket) packet.getPayload();
