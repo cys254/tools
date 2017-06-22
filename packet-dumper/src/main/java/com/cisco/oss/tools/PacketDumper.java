@@ -31,6 +31,7 @@ public class PacketDumper {
     private static final ExecutorService pool = Executors.newCachedThreadPool(new CustomizableThreadFactory("pkt-rdr-"));
 
     private static final String TIMESTAMP = "ts";
+    private static final String ROW_TS = "rts";
     private static final String DST_ADDR = "dst";
     private static final String SRC_ADDR = "src";
     private static final String DST_PORT = "dstPort";
@@ -98,7 +99,9 @@ public class PacketDumper {
                     final Timestamp timestamp = pcapHandle.getTimestamp();
 
                     final Map<String, Object> data = new HashMap<>();
-                    data.put(TIMESTAMP, timestamp.getTime()/1000);
+                    long time = timestamp.getTime();
+                    data.put(TIMESTAMP, time );
+//                    data.put(ROW_TS, time);
 
                     if (packet instanceof EthernetPacket) {
                         final IpPacket ipPacket = (IpPacket) packet.getPayload();
