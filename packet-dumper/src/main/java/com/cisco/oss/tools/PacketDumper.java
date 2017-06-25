@@ -37,7 +37,7 @@ public class PacketDumper {
     private static final String DST_PORT = "dstPort";
     private static final String SRC_PORT = "srcPort";
     private static final String R_LINE = "l";
-    private static final String INTERFACE_IP = "ip";
+    private static final String INTERFACE_IP = "ipv4";
     private static final String LENGTH = "len";
     private static final String TYPE = "t";
     private static final String SEQUENCE_NUMBER = "seqNum";
