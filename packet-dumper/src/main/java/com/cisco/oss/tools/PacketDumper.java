@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
@@ -31,12 +32,12 @@ public class PacketDumper {
     private static final ExecutorService pool = Executors.newCachedThreadPool(new CustomizableThreadFactory("pkt-rdr-"));
 
     private static final String TIMESTAMP = "ts";
-    private static final String ROW_TS = "rts";
     private static final String DST_ADDR = "dst";
     private static final String SRC_ADDR = "src";
     private static final String DST_PORT = "dstPort";
     private static final String SRC_PORT = "srcPort";
     private static final String R_LINE = "l";
+    private static final String INTERFACE_IP = "ip";
     private static final String LENGTH = "len";
     private static final String TYPE = "t";
     private static final String SEQUENCE_NUMBER = "seqNum";
@@ -89,6 +90,11 @@ public class PacketDumper {
         @Override
         public void run() {
             try {
+                final String interfaceIp = networkInterface.getAddresses().stream()
+                        .filter(item -> item instanceof PcapIpV4Address)
+                        .map(addr -> addr.getAddress().getHostAddress())
+                        .findFirst()
+                        .orElse("");
                 /**
                  * snaplen: 262144 tcpdump default.
                  */
@@ -99,9 +105,8 @@ public class PacketDumper {
                     final Timestamp timestamp = pcapHandle.getTimestamp();
 
                     final Map<String, Object> data = new HashMap<>();
-                    long time = timestamp.getTime();
-                    data.put(TIMESTAMP, time );
-//                    data.put(ROW_TS, time);
+                    data.put(TIMESTAMP, timestamp.getTime() );
+                    data.put(INTERFACE_IP, interfaceIp);
 
                     if (packet instanceof EthernetPacket) {
                         final IpPacket ipPacket = (IpPacket) packet.getPayload();
