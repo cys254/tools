@@ -1,26 +1,15 @@
 package com.cisco.oss.tools;
 
+import com.cisco.oss.tools.model.PacketContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.pcap4j.core.*;
-import org.pcap4j.packet.EthernetPacket;
-import org.pcap4j.packet.IpPacket;
-import org.pcap4j.packet.TcpPacket;
-import org.pcap4j.packet.namednumber.TcpPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -51,12 +40,12 @@ public class PacketDumper {
     private static final String COLLECTED_DATA_MESSAGE = "collected data: {}";
     public static final Charset DEFAULT_CHARSET = Charset.defaultCharset();
 
-    private final BlockingQueue<Map<String, Object>> queue;
+    private final BlockingQueue<PacketContainer> packetQueue;
     private final PcapConfiguration configuration;
 
     @Autowired
-    public PacketDumper(BlockingQueue<Map<String, Object>> queue, PcapConfiguration configuration) {
-        this.queue = queue;
+    public PacketDumper(BlockingQueue<PacketContainer> packetQueue, PcapConfiguration configuration) {
+        this.packetQueue = packetQueue;
         this.configuration = configuration;
     }
 
@@ -73,16 +62,16 @@ public class PacketDumper {
     }
 
     public void initDump(PcapNetworkInterface item) {
-        pool.execute(new ListenTask(item, queue));
+        pool.execute(new ListenTask(item, packetQueue));
     }
 
 
     private class ListenTask implements Runnable {
 
         private final PcapNetworkInterface networkInterface;
-        private final Queue<Map<String, Object>> queue;
+        private final Queue<PacketContainer> queue;
 
-        public ListenTask(PcapNetworkInterface networkInterface, Queue<Map<String, Object>> queue) {
+        public ListenTask(PcapNetworkInterface networkInterface, Queue<PacketContainer> queue) {
             this.networkInterface = networkInterface;
             this.queue = queue;
         }
@@ -103,53 +92,7 @@ public class PacketDumper {
 
                 PacketListener listener = packet -> {
                     final Timestamp timestamp = pcapHandle.getTimestamp();
-
-                    final Map<String, Object> data = new HashMap<>();
-                    data.put(TIMESTAMP, timestamp.getTime() );
-                    data.put(INTERFACE_IP, interfaceIp);
-
-                    if (packet instanceof EthernetPacket) {
-                        final IpPacket ipPacket = (IpPacket) packet.getPayload();
-
-
-                        final InetAddress dstAddr = ipPacket.getHeader().getDstAddr();
-                        final InetAddress srcAddr = ipPacket.getHeader().getSrcAddr();
-                        data.put(DST_ADDR, dstAddr.getHostAddress());
-                        data.put(SRC_ADDR, srcAddr.getHostAddress());
-
-                        final TcpPacket tcpPacket = (TcpPacket) ipPacket.getPayload();
-                        final TcpPort dstPort = tcpPacket.getHeader().getDstPort();
-                        final TcpPort srcPort = tcpPacket.getHeader().getSrcPort();
-
-                        final int tcpPayloadLength = ipPacket.length() - (20 + tcpPacket.getHeader().getDataOffsetAsInt() * 4);
-                        data.put(LENGTH, tcpPayloadLength);
-
-                        data.put(DST_PORT, dstPort.value().intValue());
-                        data.put(SRC_PORT, srcPort.value().intValue());
-
-                        try {
-                            String type = REQUEST;
-                            final byte[] rawData = tcpPacket.getPayload().getRawData();
-
-                            final String firstLine = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(rawData), DEFAULT_CHARSET)).readLine();
-
-                            if (firstLine.startsWith(HTTP_1)) {
-                                type = RESPONSE;
-                            }
-
-                            data.put(R_LINE, firstLine);
-                            data.put(TYPE, type);
-                        } catch (IOException e) {
-                            log.error(e.toString(), e);
-                        }
-
-                        data.put(SEQUENCE_NUMBER, tcpPacket.getHeader().getSequenceNumberAsLong());
-                        data.put(ACKNOWLEDGMENT_NUMBER, tcpPacket.getHeader().getAcknowledgmentNumberAsLong());
-
-                        log.debug(COLLECTED_DATA_MESSAGE, data);
-                        queue.add(data);
-                    }
-
+                    queue.add(new PacketContainer(timestamp.getTime(), interfaceIp, packet));
                 };
 
                 pcapHandle.loop(-1, listener);

@@ -1,5 +1,8 @@
 package com.cisco.oss.tools;
 
+import com.cisco.oss.tools.model.PacketContainer;
+import org.apache.commons.lang3.tuple.Pair;
+import org.pcap4j.packet.Packet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,4 +26,10 @@ public class PacketDumperApplication {
     public BlockingQueue<Map<String, Object>> queue() {
         return new LinkedBlockingQueue<>();
     }
+
+    @Bean
+    public BlockingQueue<PacketContainer> packetQueue() {
+        return new LinkedBlockingQueue<>();
+    }
+
 }
