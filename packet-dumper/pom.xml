@@ -24,7 +24,8 @@
 		<java.version>1.8</java.version>
 		<pcap4j.version>1.7.1</pcap4j.version>
 		<configuration-api.version>1.1.0-1</configuration-api.version>
-	</properties>
+        <fabric8.version>2.4.1</fabric8.version>
+    </properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -111,6 +112,18 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>kubernetes-client</artifactId>
+			<version>${fabric8.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>openshift-client</artifactId>
+            <version>${fabric8.version}</version>
+        </dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

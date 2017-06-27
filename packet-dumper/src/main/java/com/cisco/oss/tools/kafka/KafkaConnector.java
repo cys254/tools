@@ -2,6 +2,7 @@ package com.cisco.oss.tools.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -25,6 +26,9 @@ public class KafkaConnector extends Thread {
     private final KafkaTemplate<String, Map<String, Object>> kafkaTemplate;
     private boolean stop = false;
 
+    @Value("${kafkaConnector.logMode:false}")
+    private Boolean logMode = false;
+
     @Autowired
     public KafkaConnector(BlockingQueue<Map<String, Object>> queue, KafkaTemplate<String, Map<String, Object>> kafkaTemplate) {
         super("kafkaConnector");
@@ -33,23 +37,26 @@ public class KafkaConnector extends Thread {
     }
 
     private void send(String topic, Map<String, Object> message) {
-        // the KafkaTemplate provides asynchronous send methods returning a Future
-        ListenableFuture<SendResult<String, Map<String, Object>>> future = kafkaTemplate.send(topic, message);
+        if (logMode){
+            log.info("Topic: {}, Message: {}", topic, message);
+        } else {
+            // the KafkaTemplate provides asynchronous send methods returning a Future
+            ListenableFuture<SendResult<String, Map<String, Object>>> future = kafkaTemplate.send(topic, message);
 
-        // register a callback with the listener to receive the result of the send asynchronously
-        future.addCallback(new ListenableFutureCallback<SendResult<String, Map<String, Object>>>() {
+            // register a callback with the listener to receive the result of the send asynchronously
+            future.addCallback(new ListenableFutureCallback<SendResult<String, Map<String, Object>>>() {
 
-            @Override
-            public void onSuccess(SendResult<String, Map<String, Object>> result) {
-                log.debug("sent message='{}' with offset={}", message, result.getRecordMetadata().offset());
-            }
+                @Override
+                public void onSuccess(SendResult<String, Map<String, Object>> result) {
+                    log.debug("sent message='{}' with offset={}", message, result.getRecordMetadata().offset());
+                }
 
-            @Override
-            public void onFailure(Throwable ex) {
-                log.error("unable to send message='{}'", message, ex);
-            }
-        });
-
+                @Override
+                public void onFailure(Throwable ex) {
+                    log.error("unable to send message='{}'", message, ex);
+                }
+            });
+        }
     }
 
     @PostConstruct
