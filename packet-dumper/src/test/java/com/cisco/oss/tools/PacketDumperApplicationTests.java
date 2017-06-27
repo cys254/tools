@@ -27,6 +27,7 @@ public class PacketDumperApplicationTests {
                 .withMasterUrl("https://openshiftmaster.service.vci:8443")
                 .withTrustCerts(true)
                 .withOauthToken("xTqlW7pVnFpDyYjtS55JgKv6v7qvlHzQWJlpmZPmSao")
+                //kubectl config view | grep token | awk '{print $2}'
 //                .withUsername("system")
 //                .withPassword("admin")
                 .build();
