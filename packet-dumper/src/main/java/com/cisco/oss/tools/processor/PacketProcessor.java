@@ -4,14 +4,12 @@ import com.cisco.oss.tools.model.PacketContainer;
 import com.cisco.oss.tools.model.PodDatas;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.pcap4j.packet.EthernetPacket;
 import org.pcap4j.packet.IpPacket;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.namednumber.TcpPort;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -62,7 +60,7 @@ public class PacketProcessor extends Thread {
     @Autowired
     private BlockingQueue<Map<String, Object>> dataQueue;
 
-    @Autowired (required = false)
+    @Autowired(required = false)
     private PodDatas podDatas;
 
     private boolean stop = false;
@@ -145,11 +143,40 @@ public class PacketProcessor extends Thread {
                     data.put(ACKNOWLEDGMENT_NUMBER, tcpPacket.getHeader().getAcknowledgmentNumberAsLong());
 
                     log.debug(COLLECTED_DATA_MESSAGE, data);
-                    dataQueue.add(data);
+
+                    if (shouldProcess(data)) {
+                        dataQueue.add(data);
+                    }
+
+
                 }
-            }catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 log.trace(e.toString());
             }
+        }
+
+    }
+
+    private boolean shouldProcess(Map<String, Object> data) {
+        Object destHost = data.get(DST_ADDR);
+        Object srcHost = data.get(SRC_ADDR);
+
+        Object destPort = data.get(DST_PORT);
+        Object srcPort = data.get(SRC_PORT);
+
+        String txType = (String) data.get(TYPE);
+        switch (txType) {
+            case REQUEST: {
+                return podDatas.getPodByPodIp().containsKey(destHost) && podDatas.getPodByPodIp().get(destHost).getPorts().contains(destPort);
+            }
+            case RESPONSE: {
+                return podDatas.getPodByPodIp().containsKey(srcHost) && podDatas.getPodByPodIp().get(srcHost).getPorts().contains(srcPort);
+            }
+            default: {
+                log.error("Got unexpected transaction type. Packet data: {}", data);
+                return false;
+            }
+
         }
 
     }
