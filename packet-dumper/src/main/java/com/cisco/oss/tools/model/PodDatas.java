@@ -1,6 +1,5 @@
-package com.cisco.oss.tools;
+package com.cisco.oss.tools.model;
 
-import com.cisco.oss.tools.model.PodData;
 import io.fabric8.kubernetes.api.model.DoneablePod;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodList;
@@ -10,34 +9,48 @@ import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.dsl.MixedOperation;
 import io.fabric8.kubernetes.client.dsl.PodResource;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
-@Slf4j
-public class PacketDumperApplicationTests {
+/**
+ * Created by Yair Ogen (yaogen) on 28/06/2017.
+ */
+@Component
+@Profile("openshift")
+public class PodDatas {
 
-    @Test
-    public void contextLoads() {
+
+    @Value("${openshift.host:openshiftmaster.service.vci}")
+    private String openshiftHost;
+
+    @Value("${openshift.port:8443}")
+    private int openshiftPort;
+
+    @Value("${openshift.token}")
+    private String openshiftToken;
+
+    private List<PodData> podDatas;
+
+
+    @PostConstruct
+    public void init(){
         Config config = new ConfigBuilder()
-                .withMasterUrl("https://openshiftmaster.service.vci:8443")
+                .withMasterUrl("https://"+openshiftHost+":" + openshiftPort)
                 .withTrustCerts(true)
-                .withOauthToken("xTqlW7pVnFpDyYjtS55JgKv6v7qvlHzQWJlpmZPmSao")
-                //kubectl config view | grep token | awk '{print $2}'
-//                .withUsername("system")
-//                .withPassword("admin")
+                .withOauthToken(openshiftToken)
                 .build();
         KubernetesClient client = new DefaultKubernetesClient(config);
 
         final MixedOperation<Pod, PodList, DoneablePod, PodResource<Pod, DoneablePod>> pods = client.pods();
 
 
-        pods.list().getItems().stream()
+        this.podDatas = pods.list().getItems().stream()
                 .map(pod -> {
 
                     final String podIP = pod.getStatus().getPodIP();
@@ -61,10 +74,8 @@ public class PacketDumperApplicationTests {
                     return new PodData(hostname, podIP, ports);
                 })
                 .filter(podData -> !podData.getPorts().isEmpty())
-                .forEach(posData -> System.out.println(posData.toString()));
+                .collect(Collectors.toList());
 
-
+        //.forEach(posData -> System.out.println(posData.toString()));
     }
-
-
 }

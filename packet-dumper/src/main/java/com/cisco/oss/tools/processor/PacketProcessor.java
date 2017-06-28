@@ -1,6 +1,7 @@
 package com.cisco.oss.tools.processor;
 
 import com.cisco.oss.tools.model.PacketContainer;
+import com.cisco.oss.tools.model.PodDatas;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -10,6 +11,7 @@ import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.namednumber.TcpPort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -59,6 +61,9 @@ public class PacketProcessor extends Thread {
 
     @Autowired
     private BlockingQueue<Map<String, Object>> dataQueue;
+
+    @Autowired (required = false)
+    private PodDatas podDatas;
 
     private boolean stop = false;
 
