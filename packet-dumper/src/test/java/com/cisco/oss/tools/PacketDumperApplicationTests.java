@@ -10,6 +10,7 @@ import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.dsl.MixedOperation;
 import io.fabric8.kubernetes.client.dsl.PodResource;
+import io.fabric8.openshift.client.DefaultOpenShiftClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.Test;
@@ -27,12 +28,14 @@ public class PacketDumperApplicationTests {
         Config config = new ConfigBuilder()
                 .withMasterUrl("https://openshiftmaster.service.vci:8443")
                 .withTrustCerts(true)
-                .withOauthToken("xTqlW7pVnFpDyYjtS55JgKv6v7qvlHzQWJlpmZPmSao")
-                //kubectl config view | grep token | awk '{print $2}'
-//                .withUsername("system")
-//                .withPassword("admin")
+                .withNamespace("ivp")
+//                .withOauthToken("zmb1kysjcwk_R9S5HniUg3hVPk8fk4wz1SlECIUBFM8")
+//                kubectl config view | grep token | awk '{print $2}'
+                .withUsername("system")
+                .withPassword("admin")
                 .build();
-        KubernetesClient client = new DefaultKubernetesClient(config);
+        KubernetesClient client = new DefaultOpenShiftClient(config);
+
 
         final MixedOperation<Pod, PodList, DoneablePod, PodResource<Pod, DoneablePod>> pods = client.pods();
 

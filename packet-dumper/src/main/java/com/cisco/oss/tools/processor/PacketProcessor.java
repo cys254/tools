@@ -1,7 +1,6 @@
 package com.cisco.oss.tools.processor;
 
 import com.cisco.oss.tools.model.PacketContainer;
-import com.cisco.oss.tools.model.PodDatas;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.pcap4j.packet.EthernetPacket;
@@ -10,6 +9,8 @@ import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.namednumber.TcpPort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -30,23 +31,9 @@ import java.util.concurrent.BlockingQueue;
  * Created by igreenfi on 6/26/2017.
  */
 @Component
+@DependsOn("queueImpl")
 @Slf4j
 public class PacketProcessor extends Thread {
-
-    private static final String TIMESTAMP = "ts";
-    private static final String DST_ADDR = "dst";
-    private static final String SRC_ADDR = "src";
-    private static final String DST_PORT = "dstPort";
-    private static final String SRC_PORT = "srcPort";
-    private static final String R_LINE = "l";
-    private static final String INTERFACE_IP = "ipv4";
-    private static final String LENGTH = "len";
-    private static final String TYPE = "t";
-    private static final String SEQUENCE_NUMBER = "seqNum";
-    private static final String ACKNOWLEDGMENT_NUMBER = "ackNum";
-
-    private static final String REQUEST = "REQUEST";
-    private static final String RESPONSE = "RESPONSE";
 
     private static final String HTTP_1 = "HTTP/1.";
     private static final String HTTP_2 = "HTTP/2.";
@@ -60,8 +47,8 @@ public class PacketProcessor extends Thread {
     @Autowired
     private BlockingQueue<Map<String, Object>> dataQueue;
 
-    @Autowired(required = false)
-    private PodDatas podDatas;
+    @Autowired
+    private IPacketProcessingFilter processingFilter;
 
     private boolean stop = false;
 
@@ -90,8 +77,8 @@ public class PacketProcessor extends Thread {
                 final PacketContainer container = packetQueue.take();
 
                 final Map<String, Object> data = new HashMap<>();
-                data.put(TIMESTAMP, container.getTimestamp());
-                data.put(INTERFACE_IP, container.getIp());
+                data.put(Constants.TIMESTAMP, container.getTimestamp());
+                data.put(Constants.INTERFACE_IP, container.getIp());
                 final Packet packet = container.getPacket();
 
                 if (packet instanceof EthernetPacket) {
@@ -99,31 +86,31 @@ public class PacketProcessor extends Thread {
 
                     final InetAddress dstAddr = ipPacket.getHeader().getDstAddr();
                     final InetAddress srcAddr = ipPacket.getHeader().getSrcAddr();
-                    data.put(DST_ADDR, dstAddr.getHostAddress());
-                    data.put(SRC_ADDR, srcAddr.getHostAddress());
+                    data.put(Constants.DST_ADDR, dstAddr.getHostAddress());
+                    data.put(Constants.SRC_ADDR, srcAddr.getHostAddress());
 
                     final TcpPacket tcpPacket = (TcpPacket) ipPacket.getPayload();
                     final TcpPort dstPort = tcpPacket.getHeader().getDstPort();
                     final TcpPort srcPort = tcpPacket.getHeader().getSrcPort();
 
                     final int tcpPayloadLength = ipPacket.length() - (20 + tcpPacket.getHeader().getDataOffsetAsInt() * 4);
-                    data.put(LENGTH, tcpPayloadLength);
+                    data.put(Constants.LENGTH, tcpPayloadLength);
 
-                    data.put(DST_PORT, dstPort.value().intValue());
-                    data.put(SRC_PORT, srcPort.value().intValue());
+                    data.put(Constants.DST_PORT, dstPort.value().intValue());
+                    data.put(Constants.SRC_PORT, srcPort.value().intValue());
 
                     try {
-                        String type = REQUEST;
+                        String type = Constants.REQUEST;
                         final byte[] rawData = tcpPacket.getPayload().getRawData();
 
                         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(rawData), DEFAULT_CHARSET));
                         final String firstLine = bufferedReader.readLine();
 
                         if (firstLine.startsWith(HTTP_1)) {
-                            type = RESPONSE;
+                            type = Constants.RESPONSE;
                         }
 
-                        data.put(R_LINE, firstLine);
+                        data.put(Constants.R_LINE, firstLine);
 
                         List<String> headers = new ArrayList<>();
                         String line = bufferedReader.readLine();
@@ -134,17 +121,17 @@ public class PacketProcessor extends Thread {
 
                         data.put("headers", headers);
 
-                        data.put(TYPE, type);
+                        data.put(Constants.TYPE, type);
                     } catch (IOException e) {
                         log.error(e.toString(), e);
                     }
 
-                    data.put(SEQUENCE_NUMBER, tcpPacket.getHeader().getSequenceNumberAsLong());
-                    data.put(ACKNOWLEDGMENT_NUMBER, tcpPacket.getHeader().getAcknowledgmentNumberAsLong());
+                    data.put(Constants.SEQUENCE_NUMBER, tcpPacket.getHeader().getSequenceNumberAsLong());
+                    data.put(Constants.ACKNOWLEDGMENT_NUMBER, tcpPacket.getHeader().getAcknowledgmentNumberAsLong());
 
                     log.debug(COLLECTED_DATA_MESSAGE, data);
 
-                    if (shouldProcess(data)) {
+                    if (processingFilter.filter(data)) {
                         dataQueue.add(data);
                     }
 
@@ -157,27 +144,4 @@ public class PacketProcessor extends Thread {
 
     }
 
-    private boolean shouldProcess(Map<String, Object> data) {
-        Object destHost = data.get(DST_ADDR);
-        Object srcHost = data.get(SRC_ADDR);
-
-        Object destPort = data.get(DST_PORT);
-        Object srcPort = data.get(SRC_PORT);
-
-        String txType = (String) data.get(TYPE);
-        switch (txType) {
-            case REQUEST: {
-                return podDatas.getPodByPodIp().containsKey(destHost) && podDatas.getPodByPodIp().get(destHost).getPorts().contains(destPort);
-            }
-            case RESPONSE: {
-                return podDatas.getPodByPodIp().containsKey(srcHost) && podDatas.getPodByPodIp().get(srcHost).getPorts().contains(srcPort);
-            }
-            default: {
-                log.error("Got unexpected transaction type. Packet data: {}", data);
-                return false;
-            }
-
-        }
-
-    }
 }

@@ -1,5 +1,6 @@
 package com.cisco.oss.tools.kafka;
 
+import com.cisco.oss.tools.processor.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import javax.annotation.PreDestroy;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-@Component
+@Component("queueImpl")
 @Profile("kafka")
 @Slf4j
 public class KafkaConnector extends Thread {
@@ -40,6 +41,7 @@ public class KafkaConnector extends Thread {
         if (logMode){
             log.info("Topic: {}, Message: {}", topic, message);
         } else {
+            message.remove(Constants.INTERFACE_IP);
             // the KafkaTemplate provides asynchronous send methods returning a Future
             ListenableFuture<SendResult<String, Map<String, Object>>> future = kafkaTemplate.send(topic, message);
 

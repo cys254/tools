@@ -4,6 +4,8 @@ import com.cisco.oss.tools.model.PacketContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.pcap4j.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Component
+@DependsOn("packetProcessor")
 @Slf4j
 public class PacketDumper {
     private static final ExecutorService pool = Executors.newCachedThreadPool(new CustomizableThreadFactory("pkt-rdr-"));

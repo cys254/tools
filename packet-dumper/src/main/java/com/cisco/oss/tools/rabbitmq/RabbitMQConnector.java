@@ -2,6 +2,7 @@ package com.cisco.oss.tools.rabbitmq;
 
 import com.cisco.oss.foundation.message.MessageProducer;
 import com.cisco.oss.foundation.message.RabbitMQMessagingFactory;
+import com.cisco.oss.tools.processor.Constants;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Created by igreenfi on 6/12/2017.
  */
-@Component
+@Component("queueImpl")
 @Profile("rabbitmq")
 @Slf4j
 public class RabbitMQConnector extends Thread {
@@ -51,6 +52,7 @@ public class RabbitMQConnector extends Thread {
         while (!stop && !this.isInterrupted()) {
             try {
                 final Map<String, Object> take = queue.take();
+                take.remove(Constants.INTERFACE_IP);
                 messageProducer.sendMessage(OBJECT_MAPPER.writeValueAsBytes(take));
             } catch (InterruptedException e) {
                 log.trace(e.toString(), e);

@@ -5,10 +5,10 @@ import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodList;
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.ConfigBuilder;
-import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.dsl.MixedOperation;
 import io.fabric8.kubernetes.client.dsl.PodResource;
+import io.fabric8.openshift.client.DefaultOpenShiftClient;
 import lombok.extern.slf4j.Slf4j;
 import org.pcap4j.core.PcapIpV4Address;
 import org.pcap4j.core.PcapNativeException;
@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,8 +38,14 @@ public class PodDatas {
     @Value("${openshift.port:8443}")
     private int openshiftPort;
 
-    @Value("${openshift.token}")
-    private String openshiftToken;
+    @Value("${openshift.user:system}")
+    private String openshiftUser;
+
+    @Value("${openshift.password:admin}")
+    private String openshiftPassword;
+
+    @Value("${openshift.namespace:ivp}")
+    private String openshiftNamespace;
 
     private List<PodData> podDatas;
 
@@ -70,9 +75,11 @@ public class PodDatas {
             Config config = new ConfigBuilder()
                     .withMasterUrl("https://" + openshiftHost + ":" + openshiftPort)
                     .withTrustCerts(true)
-                    .withOauthToken(openshiftToken)
+                    .withUsername(openshiftUser)
+                    .withPassword(openshiftPassword)
+                    .withNamespace(openshiftNamespace)
                     .build();
-            KubernetesClient client = new DefaultKubernetesClient(config);
+            KubernetesClient client = new DefaultOpenShiftClient(config);
 
             final MixedOperation<Pod, PodList, DoneablePod, PodResource<Pod, DoneablePod>> pods = client.pods();
 
@@ -80,20 +87,11 @@ public class PodDatas {
             this.podDatas = pods.list().getItems().stream()
                     .filter(pod -> localAddresses.contains(pod.getSpec().getNodeName()))
                     .map(pod -> {
-
                         final String podIP = pod.getStatus().getPodIP();
                         final String hostname = pod.getSpec().getNodeName();
                         final List<Integer> ports = pod.getSpec().getContainers().stream()
                                 .flatMap(container -> container.getPorts().stream()
-                                        .map(containerPort -> {
-                                            Integer port = containerPort.getHostPort();
-
-                                            if (port == null) {
-                                                port = containerPort.getContainerPort();
-                                            }
-
-                                            return port;
-                                        })
+                                        .map(containerPort -> containerPort.getHostPort() == null ? containerPort.getContainerPort() : containerPort.getHostPort())
                                 )
                                 .distinct()
                                 .collect(Collectors.toList());
@@ -104,12 +102,9 @@ public class PodDatas {
                     .collect(Collectors.toList());
 
             this.podByPodIp = podDatas.stream()
-//                .map(podData -> podData.getPodIP())
                     .collect(Collectors.toMap(
                             podData -> podData.getPodIP(),
                             podData -> podData));
-
-            //.forEach(posData -> System.out.println(posData.toString()));
 
         } catch (PcapNativeException e) {
             throw new RuntimeException("error catching nic ip's: " + e);
