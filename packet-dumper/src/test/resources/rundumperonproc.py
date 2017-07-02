@@ -5,10 +5,10 @@ import re
 
 pids = psutil.pids()
 i=0
-pidstoprocess=[]
-subprocport = 60000
+pids_to_process=[]
 dumperpids = []
-print len(pids)
+print "Total PIDs: " +  str(len(pids))
+regex=r'.*--LISTEN_PID=([0-9]+)'
 try:
     for pid in pids:
         p = psutil.Process(pid)
@@ -16,17 +16,12 @@ try:
         parts = [part for part in cmdline if "--LISTEN_PID=" in part]
         # print ("cmdline", cmdline)
         # print ("parts", parts)
-        for part in parts:
-            matchObj = re.match(r'.*--LISTEN_PID=([0-9]+)',part)
-            dumperpids.append(int(matchObj.group(1)))
-            dumperpids.append(pid)
-    #
-        # if len(cmdline) > 0:
-        #     for part in cmdline:
-        #         if "--LISTEN_PID=" in part:
-        #             matchObj = re.match(r'.*--LISTEN_PID=([0-9]+)',part)
-        #             print ("GROUP:{0}".format(matchObj.group(1)))
-        #             dumperpids.append(matchObj.group(1))
+        if len(parts) > 0:
+            for part in parts:
+                matchObj = re.match(regex,part)
+                dumperpids.append(int(matchObj.group(1)))
+            continue
+
         proc = subprocess.Popen(["nsenter", "-t", str(pid), "-n", "netstat", "-natp"], stdout=subprocess.PIPE)
         output,err = proc.communicate()
         rc = proc.returncode
@@ -45,25 +40,20 @@ try:
                     i=i+1
                     #print i
                     #print fullline
-                    pidstoprocess.append(pid)
+                    pids_to_process.append(pid)
                 #print (pid, p.name())
 
 except:
     print "Unexpected error:", sys.exc_info()
 
-pidstoprocess = list(set(pidstoprocess))
-print len(pidstoprocess)
-print pidstoprocess
-print "dumperpids: "
-print dumperpids
+pids_to_process = list(set(pids_to_process))
+print "Found PIDs #" + str(len(pids_to_process))
+print "Found PIDs: " + ",".join(str(x) for x in pids_to_process)
+print "PIDs to skip: " + ",".join(str(x) for x in dumperpids)
 
+unique_pids_to_process = list(set(pids_to_process) & set(set(pids_to_process) ^ set(dumperpids)))
+print unique_pids_to_process
 
-for pid in pidstoprocess:
-    subprocport = subprocport + 1
-    #print subprocport
-    # subproc = os.fork()
-    #print subproc
-    # if subproc == 0:
-    #TODO: move dumper logs to files
-    if pid not in dumperpids:
-        subprocess.Popen(["nsenter", "-t", str(pid), "-n", "java", "-jar", "/opt/cisco/packet_dumper/packet-dumper-0.0.1-SNAPSHOT.jar", "--kafka.bootstrap-servers=test-machine.il.nds.com:80", "--spring.profiles.active=kafka,vm", "--kafkaConnector.logMode=true", "--pcap.devicePrefix=eth", "--server.port={0}".format(subprocport), "--LISTEN_PID={0}".format(pid)], stdin=None, stdout=None, stderr=None)
+for pid in unique_pids_to_process:
+    with open("/var/log/packet-dumper_" + str(pid) + ".txt","wb") as out:
+        subprocess.Popen(["nsenter", "-t", str(pid), "-n", "java", "-jar", "/opt/cisco/packet_dumper/packet-dumper-0.0.1-SNAPSHOT.jar", "--kafka.bootstrap-servers=test-machine.il.nds.com:80", "--spring.profiles.active=kafka,vm", "--kafkaConnector.logMode=true", "--pcap.devicePrefix=eth", "--server.port=0", "--LISTEN_PID={0}".format(pid)], stdin=out, stdout=out, stderr=out)
