@@ -33,4 +33,17 @@ public class PcapConfiguration {
      */
     private String filter;
 
+    private Integer portFilter;
+
+    /**
+     * Return all the filter configured concatenated with 'and'
+     * @return
+     */
+    public String getFullFilter() {
+        StringBuilder fullFilter = new StringBuilder(filter);
+        if (portFilter != null) {
+            fullFilter.append(" and port ").append(portFilter);
+        }
+        return fullFilter.toString();
+    }
 }
