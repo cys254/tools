@@ -63,7 +63,7 @@ public class KafkaConnector extends Thread {
 
     @PostConstruct
     public void init() {
-        log.info("Start KAFKA connector.");
+        log.info("Start KAFKA producer. logMode={}", logMode);
         this.setDaemon(true);
         this.start();
     }

@@ -5,12 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.pcap4j.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
@@ -22,26 +20,6 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class PacketDumper {
     private static final ExecutorService pool = Executors.newCachedThreadPool(new CustomizableThreadFactory("pkt-rdr-"));
-
-    private static final String TIMESTAMP = "ts";
-    private static final String DST_ADDR = "dst";
-    private static final String SRC_ADDR = "src";
-    private static final String DST_PORT = "dstPort";
-    private static final String SRC_PORT = "srcPort";
-    private static final String R_LINE = "l";
-    private static final String INTERFACE_IP = "ipv4";
-    private static final String LENGTH = "len";
-    private static final String TYPE = "t";
-    private static final String SEQUENCE_NUMBER = "seqNum";
-    private static final String ACKNOWLEDGMENT_NUMBER = "ackNum";
-
-    private static final String REQUEST = "REQUEST";
-    private static final String RESPONSE = "RESPONSE";
-
-    private static final String HTTP_1 = "HTTP/1.";
-    private static final String HTTP_2 = "HTTP/2.";
-    private static final String COLLECTED_DATA_MESSAGE = "collected data: {}";
-    public static final Charset DEFAULT_CHARSET = Charset.defaultCharset();
 
     private final BlockingQueue<PacketContainer> packetQueue;
     private final PcapConfiguration configuration;
@@ -57,7 +35,12 @@ public class PacketDumper {
         try {
             Pcaps.findAllDevs().stream()
                     .filter(item -> configuration.getDevicePrefix().stream().anyMatch(prefix -> item.getName().startsWith(prefix)))
-                    .forEach(item -> initDump(item));
+                    .forEach(item -> {
+                        if (log.isDebugEnabled()) {
+                            log.debug(item.toString());
+                        }
+                        initDump(item);
+                    });
         } catch (PcapNativeException e) {
             log.error("Failed to list NICs {}", e.toString(), e);
             throw new IllegalStateException(e);

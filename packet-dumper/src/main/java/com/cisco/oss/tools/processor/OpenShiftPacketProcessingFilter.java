@@ -18,6 +18,10 @@ import static com.cisco.oss.tools.processor.Constants.*;
 @Slf4j
 public class OpenShiftPacketProcessingFilter implements IPacketProcessingFilter {
 
+    public OpenShiftPacketProcessingFilter() {
+        log.info("OpenShiftPacketProcessingFilter in use.");
+    }
+
     @Autowired
     private PodDatas podDatas;
 

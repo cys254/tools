@@ -15,6 +15,11 @@ import static com.cisco.oss.tools.processor.Constants.*;
 @Profile("vm")
 @Slf4j
 public class VMPacketProcessingFilter implements IPacketProcessingFilter {
+
+    public VMPacketProcessingFilter() {
+        log.info("VMPacketProcessingFilter in use.");
+    }
+
     @Override
     public boolean filter(Map<String, Object> data) {
 
@@ -24,6 +29,12 @@ public class VMPacketProcessingFilter implements IPacketProcessingFilter {
         Object srcHost = data.get(SRC_ADDR);
 
         String txType = (String) data.get(TYPE);
+
+        log.debug("txType: {}, captureInterfaceIp: {},srcHost: {} destHost: {}", txType, captureInterfaceIp, srcHost, destHost);
+
+        if (txType == null)
+            return false;
+
         switch (txType) {
             case REQUEST: {
                 return captureInterfaceIp.equals(destHost);

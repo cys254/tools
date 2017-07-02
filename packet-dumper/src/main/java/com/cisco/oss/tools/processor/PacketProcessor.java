@@ -10,7 +10,6 @@ import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.namednumber.TcpPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -81,6 +80,9 @@ public class PacketProcessor extends Thread {
                 data.put(Constants.INTERFACE_IP, container.getIp());
                 final Packet packet = container.getPacket();
 
+                if (log.isTraceEnabled()) {
+                    log.trace(packet.toString());
+                }
                 if (packet instanceof EthernetPacket) {
                     final IpPacket ipPacket = (IpPacket) packet.getPayload();
 
@@ -124,18 +126,20 @@ public class PacketProcessor extends Thread {
                         data.put(Constants.TYPE, type);
                     } catch (IOException e) {
                         log.error(e.toString(), e);
+                    } catch (NullPointerException e) {
+                        log.error(e.toString(), e);
                     }
 
                     data.put(Constants.SEQUENCE_NUMBER, tcpPacket.getHeader().getSequenceNumberAsLong());
                     data.put(Constants.ACKNOWLEDGMENT_NUMBER, tcpPacket.getHeader().getAcknowledgmentNumberAsLong());
 
-                    log.debug(COLLECTED_DATA_MESSAGE, data);
 
                     if (processingFilter.filter(data)) {
+                        log.debug(COLLECTED_DATA_MESSAGE, data);
                         dataQueue.add(data);
+                    } else {
+                        log.debug("Skip packet: {}", data);
                     }
-
-
                 }
             } catch (InterruptedException e) {
                 log.trace(e.toString());
