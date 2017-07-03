@@ -1,11 +1,13 @@
 package com.cisco.oss.tools;
 
+import com.google.common.base.Joiner;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by igreenfi on 6/14/2017.
@@ -15,6 +17,9 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "pcap")
 public class PcapConfiguration {
+
+    private static final Joiner orJoiner = Joiner.on(" || ");
+
     private List<String> devicePrefix;
     /**
      * <h1>Sample filter</h1>
@@ -33,17 +38,24 @@ public class PcapConfiguration {
      */
     private String filter;
 
-    private Integer portFilter;
+    private List<String> portFilter;
 
     /**
      * Return all the filter configured concatenated with 'and'
+     *
      * @return
      */
     public String getFullFilter() {
-        StringBuilder fullFilter = new StringBuilder(filter);
         if (portFilter != null) {
-            fullFilter.append(" and port ").append(portFilter);
+            StringBuilder fullFilter = new StringBuilder();
+            fullFilter.append("( ").append(filter).append(" )");
+            final List<String> filter = portFilter.stream().map(port -> "port " + port).collect(Collectors.toList());
+            fullFilter.append(" && ( ")
+                    .append(orJoiner.join(filter))
+                    .append(" )");
+            return fullFilter.toString();
+        } else {
+            return filter;
         }
-        return fullFilter.toString();
     }
 }

@@ -74,7 +74,9 @@ public class PacketDumper {
                  * snaplen: 262144 tcpdump default.
                  */
                 final PcapHandle pcapHandle = networkInterface.openLive(262144, PcapNetworkInterface.PromiscuousMode.PROMISCUOUS, 0);
-                pcapHandle.setFilter(configuration.getFullFilter(), BpfProgram.BpfCompileMode.OPTIMIZE);
+                final String fullFilter = configuration.getFullFilter();
+                log.trace("PCAP filter in use: {}", fullFilter);
+                pcapHandle.setFilter(fullFilter, BpfProgram.BpfCompileMode.OPTIMIZE);
 
                 PacketListener listener = packet -> {
                     final Timestamp timestamp = pcapHandle.getTimestamp();

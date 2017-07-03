@@ -4,7 +4,7 @@ import sys
 import re
 
 pids = psutil.pids()
-i=0
+pids_to_ports = {}
 pids_to_process=[]
 dumperpids = []
 print "Total PIDs: " +  str(len(pids))
@@ -14,8 +14,6 @@ try:
         p = psutil.Process(pid)
         cmdline = p.cmdline()
         parts = [part for part in cmdline if "--LISTEN_PID=" in part]
-        # print ("cmdline", cmdline)
-        # print ("parts", parts)
         if len(parts) > 0:
             for part in parts:
                 matchObj = re.match(regex,part)
@@ -30,18 +28,13 @@ try:
             listenLines = [line for line in lines if "LISTEN" in line]
             for fullline in listenLines:
                 splitlines = fullline.split()
-                #print ("split lines",splitlines)
                 hostAndIp = splitlines[3]
                 processId = splitlines[6].split("/")[0]
-                port = hostAndIp[hostAndIp.rfind(":")+1:]
-                #print port
-                if (str(pid) == str(processId) and int(port) > 1024):
-                    #print processId
-                    i=i+1
-                    #print i
-                    #print fullline
+                listenPort = hostAndIp[hostAndIp.rfind(":") + 1:]
+                if (str(pid) == str(processId) and int(listenPort) > 1024):
                     pids_to_process.append(pid)
-                #print (pid, p.name())
+                    pids_to_ports.setdefault(pid, []).append(listenPort)
+                    #print (pid, p.name())
 
 except:
     print "Unexpected error:", sys.exc_info()
@@ -56,4 +49,5 @@ print unique_pids_to_process
 
 for pid in unique_pids_to_process:
     with open("/var/log/packet-dumper_" + str(pid) + ".txt","wb") as out:
-        subprocess.Popen(["nsenter", "-t", str(pid), "-n", "java", "-jar", "/opt/cisco/packet_dumper/packet-dumper-0.0.1-SNAPSHOT.jar", "--kafka.bootstrap-servers=test-machine.il.nds.com:80", "--spring.profiles.active=kafka,vm", "--kafkaConnector.logMode=true", "--pcap.devicePrefix=eth", "--server.port=0", "--LISTEN_PID={0}".format(pid)], stdin=out, stdout=out, stderr=out)
+        portFilter = "--pcap.portFilter=" + ",".join(pids_to_ports[pid])
+        subprocess.Popen(["nsenter", "-t", str(pid), "-n", "java", "-jar", "/opt/cisco/packet_dumper/packet-dumper-0.0.1-SNAPSHOT.jar", portFilter, "--kafka.bootstrap-servers=test-machine.il.nds.com:80", "--spring.profiles.active=kafka,vm", "--kafkaConnector.logMode=false", "--pcap.devicePrefix=eth", "--server.port=0", "--LISTEN_PID={0}".format(pid)], stdin=out, stdout=out, stderr=out)
