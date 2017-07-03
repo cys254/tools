@@ -13,11 +13,13 @@ import io.fabric8.kubernetes.client.dsl.PodResource;
 import io.fabric8.openshift.client.DefaultOpenShiftClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Ignore
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 @Slf4j
