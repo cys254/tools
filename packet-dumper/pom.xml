@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.cisco.oss.foundation.tools</groupId>
-	<artifactId>packet-dumper</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <groupId>com.cisco.oss.foundation.tools</groupId>
+    <artifactId>packet-dumper</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-	<name>packet-dumper</name>
-	<description>Packet Dumper</description>
+    <name>packet-dumper</name>
+    <description>Packet Dumper</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<pcap4j.version>1.7.1</pcap4j.version>
-		<configuration-api.version>1.1.0-1</configuration-api.version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <pcap4j.version>1.7.1</pcap4j.version>
+        <configuration-api.version>1.1.0-1</configuration-api.version>
         <fabric8.version>2.4.1</fabric8.version>
     </properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.cisco.oss.foundation</groupId>
-				<artifactId>configuration-api</artifactId>
-				<version>${configuration-api.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.cisco.oss.foundation</groupId>
+                <artifactId>configuration-api</artifactId>
+                <version>${configuration-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.pcap4j</groupId>
-			<artifactId>pcap4j-core</artifactId>
-			<version>${pcap4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.pcap4j</groupId>
-			<artifactId>pcap4j-packetfactory-static</artifactId>
-			<version>${pcap4j.version}</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.pcap4j</groupId>
+            <artifactId>pcap4j-core</artifactId>
+            <version>${pcap4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pcap4j</groupId>
+            <artifactId>pcap4j-packetfactory-static</artifactId>
+            <version>${pcap4j.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.cisco.oss.foundation.queue</groupId>
-			<artifactId>queue-rabbitmq</artifactId>
-			<version>1.5.4-1</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>logging-log4j</artifactId>
-					<groupId>com.cisco.oss.foundation</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>configuration-lib</artifactId>
-					<groupId>com.cisco.oss.foundation</groupId>
-				</exclusion>
+        <dependency>
+            <groupId>com.cisco.oss.foundation.queue</groupId>
+            <artifactId>queue-rabbitmq</artifactId>
+            <version>1.5.4-1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>logging-log4j</artifactId>
+                    <groupId>com.cisco.oss.foundation</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>configuration-lib</artifactId>
+                    <groupId>com.cisco.oss.foundation</groupId>
+                </exclusion>
 
-			</exclusions>
-		</dependency>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,78 +72,155 @@
             <optional>true</optional>
         </dependency>
 
-		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
 
-		<dependency>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-			<groupId>org.springframework.boot</groupId>
-		</dependency>
+        <dependency>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
 
-		<dependency>
-			<artifactId>spring-boot-starter-jetty</artifactId>
-			<groupId>org.springframework.boot</groupId>
-		</dependency>
+        <dependency>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-actuator</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-					<groupId>org.springframework.boot</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-boot-starter-logging</artifactId>
-					<groupId>org.springframework.boot</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
-		<dependency>
-			<groupId>io.fabric8</groupId>
-			<artifactId>kubernetes-client</artifactId>
-			<version>${fabric8.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+            <version>${fabric8.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>openshift-client</artifactId>
             <version>${fabric8.version}</version>
         </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
+
+    <profiles>
+        <profile>
+            <id>RPM</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>rpm-maven-plugin</artifactId>
+                        <version>2.1-alpha-3</version>
+                        <configuration>
+                            <defineStatements>
+                                <defineStatement>__os_install_post %{nil}</defineStatement>
+                                <defineStatement>software_name ${project.artifactId}</defineStatement>
+                                <defineStatement>software_group cab</defineStatement>
+                                <defineStatement>software_version ${project.version}</defineStatement>
+                                <defineStatement>software_user_id root</defineStatement>
+                                <defineStatement>software_group_id root</defineStatement>
+                                <defineStatement>_source_filedigest_algorithm 1</defineStatement>
+                                <defineStatement>_binary_filedigest_algorithm 1</defineStatement>
+                                <defineStatement>_binary_payload w9.gzdio</defineStatement>
+                            </defineStatements>
+                            <postinstallScriptlet>
+                                <scriptFile>src/main/rpm/scripts/post_install</scriptFile>
+                            </postinstallScriptlet>
+                            <autoRequires>true</autoRequires>
+                            <name>cisco_ops_dumper</name>
+                            <packager>CISCO Limited</packager>
+                            <copyright>CISCO Limited</copyright>
+                            <group>Application/CISCO</group>
+                            <url>http://www.cisco.com/</url>
+                            <needarch>noarch</needarch>
+                            <prefix>/opt/cisco</prefix>
+                            <distribution>Red Hat Linux</distribution>
+                            <mappings>
+                                <mapping>
+                                    <directory>/opt/cisco</directory>
+                                    <username>root</username>
+                                    <groupname>root</groupname>
+                                    <filemode>0755</filemode>
+                                </mapping>
+                                <mapping>
+                                    <directory>/opt/cisco/packet_dumper</directory>
+                                    <username>root</username>
+                                    <groupname>root</groupname>
+                                    <filemode>0755</filemode>
+                                    <sources>
+                                        <source>
+                                            <location>
+                                                /${project.build.directory}/${project.artifactId}-${project.version}.jar
+                                            </location>
+                                        </source>
+                                        <source>
+                                            <location>src/main/scripts/rundumperonproc.py</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+                            </mappings>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>makerpm</id>
+                                <goals>
+                                    <goal>attached-rpm</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
