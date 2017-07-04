@@ -159,8 +159,12 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>rpm-maven-plugin</artifactId>
-                        <version>2.1-alpha-3</version>
+                        <version>2.1-alpha-2_NDS7</version>
                         <configuration>
+                            <defaultDirmode>0755</defaultDirmode>
+                            <defaultFilemode>0644</defaultFilemode>
+                            <defaultGroupname>root</defaultGroupname>
+                            <defaultUsername>root</defaultUsername>
                             <defineStatements>
                                 <defineStatement>__os_install_post %{nil}</defineStatement>
                                 <defineStatement>software_name ${project.artifactId}</defineStatement>
@@ -181,21 +185,17 @@
                             <copyright>CISCO Limited</copyright>
                             <group>Application/CISCO</group>
                             <url>http://www.cisco.com/</url>
-                            <needarch>noarch</needarch>
                             <prefix>/opt/cisco</prefix>
                             <distribution>Red Hat Linux</distribution>
                             <mappings>
                                 <mapping>
                                     <directory>/opt/cisco</directory>
-                                    <username>root</username>
-                                    <groupname>root</groupname>
-                                    <filemode>0755</filemode>
                                 </mapping>
                                 <mapping>
-                                    <directory>/opt/cisco/packet_dumper</directory>
-                                    <username>root</username>
-                                    <groupname>root</groupname>
-                                    <filemode>0755</filemode>
+                                    <directory>/opt/cisco/installed</directory>
+                                </mapping>
+                                <mapping>
+                                    <directory>/opt/cisco/installed/${project.artifactId}-${project.version}</directory>
                                     <sources>
                                         <source>
                                             <location>
@@ -205,6 +205,16 @@
                                         <source>
                                             <location>src/main/scripts/rundumperonproc.py</location>
                                         </source>
+                                    </sources>
+                                </mapping>
+                                <mapping>
+                                    <directory>/opt/cisco</directory>
+                                    <sources>
+                                        <softlinkSource>
+                                            <location>
+                                                /opt/cisco/installed/${project.artifactId}-${project.version}
+                                            </location>
+                                        </softlinkSource>
                                     </sources>
                                 </mapping>
                             </mappings>
