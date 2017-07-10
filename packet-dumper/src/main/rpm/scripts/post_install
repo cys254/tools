@@ -1,4 +1,3 @@
-set -x
 CISCOLOGPATH=/var/log/cisco
 APP_VERSION=%{software_version}
 APP_LOG_PATH=/var/log/cisco/%{software_name}
