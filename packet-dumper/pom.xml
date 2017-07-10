@@ -223,6 +223,7 @@
                                     <directory>/opt/cisco</directory>
                                     <sources>
                                         <softlinkSource>
+                                            <destination>${project.artifactId}</destination>
                                             <location>
                                                 /opt/cisco/installed/${project.artifactId}
                                             </location>
