@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Yair Ogen (yaogen) on 10/07/2017.
@@ -17,23 +15,22 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class PacketDumperSelfDestruct {
 
-    @Value("${LISTEN_PID}")
-    private String listenPid;
+    @Value("${LISTEN_PID:-1}")
+    private String listenPid = "-1";
 
     private static final int SLEEP = 30000;
 
     @Scheduled(fixedDelay = SLEEP)
     public void exitIfListPidIsDead() {
-
-        try {
-            if (!isStillAllive()) {
-                System.exit(0);
+        if (!listenPid.equals("-1")) {
+            try {
+                if (!isStillAllive()) {
+                    System.exit(0);
+                }
+            } catch (Exception e) {
+                log.warn("problem checking if listen pid: {} is still running. error: {}", listenPid, e.toString());
             }
-        } catch (Exception e) {
-            log.warn("problem checking if listen pid: {} is still running. error: {}", listenPid, e.toString());
         }
-
-
     }
 
     public boolean isStillAllive() {
