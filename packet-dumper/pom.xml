@@ -208,6 +208,7 @@
                                 </mapping>
                                 <mapping>
                                     <directory>/opt/cisco/installed/${project.artifactId}-${project.version}</directory>
+                                    <filemode>700</filemode>
                                     <sources>
                                         <source>
                                             <location>
