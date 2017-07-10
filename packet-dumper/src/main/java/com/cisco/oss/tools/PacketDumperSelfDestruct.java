@@ -25,7 +25,10 @@ public class PacketDumperSelfDestruct {
         if (!listenPid.equals("-1")) {
             try {
                 if (!isStillAllive()) {
+                    log.info("listener pid: {} appears to down. EXITING...", listenPid);
                     System.exit(0);
+                }else{
+                    log.trace("listener pid: {} seems to be up and running", listenPid);
                 }
             } catch (Exception e) {
                 log.warn("problem checking if listen pid: {} is still running. error: {}", listenPid, e.toString());
@@ -37,10 +40,10 @@ public class PacketDumperSelfDestruct {
         String OS = System.getProperty("os.name").toLowerCase();
         String command = null;
         if (OS.indexOf("win") >= 0) {
-            log.debug("Check alive Windows mode. Pid: [{}]", listenPid);
+            log.trace("Check alive Windows mode. Pid: [{}]", listenPid);
             command = "cmd /c tasklist /FI \"PID eq " + listenPid + "\"";
         } else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0) {
-            log.debug("Check alive Linux/Unix mode. Pid: [{}]", listenPid);
+            log.trace("Check alive Linux/Unix mode. Pid: [{}]", listenPid);
             command = "ps -p " + listenPid;
         } else {
             log.warn("Unsuported OS: Check alive for Pid: [{}] return false", listenPid);
@@ -50,7 +53,7 @@ public class PacketDumperSelfDestruct {
     }
 
     private boolean isProcessIdRunning(String pid, String command) {
-        log.debug("Command [{}]", command);
+        log.trace("Command [{}]", command);
         try {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(command);
