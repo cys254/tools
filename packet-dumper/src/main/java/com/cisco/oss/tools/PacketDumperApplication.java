@@ -7,12 +7,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 @SpringBootApplication
 @ComponentScan({"com.cisco.oss"})
@@ -34,4 +34,8 @@ public class PacketDumperApplication {
         return new LinkedBlockingQueue<>();
     }
 
+    @Bean
+    public ScheduledExecutorService taskExecutor() {
+        return Executors.newScheduledThreadPool(1);
+    }
 }
