@@ -3,8 +3,12 @@ APPVERSION=%{software_version}
 APPLOGPATH=/var/log/cisco/%{software_name}
 
 SOFTWARE_NAME=%{software_name}
-SOFTWARE_INSTALATION_PATH=/opt/cisco/%{software_name}-${APPVERSION}
+SOFTWARE_INSTALATION_PATH=/opt/cisco/installed/%{software_name}-${APPVERSION}
 
 sed -i "s/##log_path##/${APPLOGPATH}/g" ${SOFTWARE_INSTALATION_PATH}/rundumperonproc.py
 sed -i "s/##software_name##/${SOFTWARE_NAME}/g" ${SOFTWARE_INSTALATION_PATH}/rundumperonproc.py
 sed -i "s/##software_version##/${APPVERSION}/g" ${SOFTWARE_INSTALATION_PATH}/rundumperonproc.py
+
+rm -f /opt/cisco/${SOFTWARE_NAME} || true
+
+ln -s ${SOFTWARE_INSTALATION_PATH} /opt/cisco/${SOFTWARE_NAME}
