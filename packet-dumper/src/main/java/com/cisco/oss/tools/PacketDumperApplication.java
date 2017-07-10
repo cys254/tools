@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -16,6 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 @SpringBootApplication
 @ComponentScan({"com.cisco.oss"})
 @EnableAsync
+@EnableScheduling
 public class PacketDumperApplication {
 
     public static void main(String[] args) {

@@ -2,6 +2,7 @@ package com.cisco.oss.tools;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,34 +20,18 @@ public class PacketDumperSelfDestruct {
     @Value("${LISTEN_PID}")
     private String listenPid;
 
-    private int SLEEP = 30;
+    private static final int SLEEP = 30000;
 
-    @PostConstruct
-    public void init(){
-        Thread packetDumperSelfDestruct  = new Thread(()->{
+    @Scheduled(fixedDelay = SLEEP)
+    public void exitIfListPidIsDead() {
 
-            while (true){
-
-                try {
-                    if(!isStillAllive()){
-                        System.exit(0);
-                    }
-                } catch (Exception e) {
-                    log.warn("problem checking if listen pid: {} is still running. error: {}", listenPid, e.toString());
-                } finally {
-                    try {
-                        TimeUnit.SECONDS.sleep(SLEEP);
-                    } catch (InterruptedException e) {
-                        log.trace(e.toString());
-                    }
-                }
-
+        try {
+            if (!isStillAllive()) {
+                System.exit(0);
             }
-
-        },"PacketDumperSelfDestruct");
-
-        packetDumperSelfDestruct.setDaemon(false);
-        packetDumperSelfDestruct.start();
+        } catch (Exception e) {
+            log.warn("problem checking if listen pid: {} is still running. error: {}", listenPid, e.toString());
+        }
 
 
     }
@@ -68,7 +53,7 @@ public class PacketDumperSelfDestruct {
     }
 
     private boolean isProcessIdRunning(String pid, String command) {
-        log.debug("Command [{}]",command );
+        log.debug("Command [{}]", command);
         try {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(command);
@@ -76,7 +61,7 @@ public class PacketDumperSelfDestruct {
             InputStreamReader isReader = new InputStreamReader(pr.getInputStream());
             BufferedReader bReader = new BufferedReader(isReader);
             String strLine = null;
-            while ((strLine= bReader.readLine()) != null) {
+            while ((strLine = bReader.readLine()) != null) {
                 if (strLine.contains(" " + pid + " ")) {
                     return true;
                 }
@@ -88,8 +73,6 @@ public class PacketDumperSelfDestruct {
             return true;
         }
     }
-
-
 
 
 }
