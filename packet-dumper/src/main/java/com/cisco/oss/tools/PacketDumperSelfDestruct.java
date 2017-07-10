@@ -25,7 +25,7 @@ public class PacketDumperSelfDestruct {
         if (!listenPid.equals("-1")) {
             try {
                 if (!isStillAllive()) {
-                    log.info("listener pid: {} appears to down. EXITING...", listenPid);
+                    log.info("listener pid: {} appears to be down. EXITING...", listenPid);
                     System.exit(0);
                 }else{
                     log.trace("listener pid: {} seems to be up and running", listenPid);
