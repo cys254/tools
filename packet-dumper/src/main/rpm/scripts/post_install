@@ -8,7 +8,7 @@ SOFTWARE_INSTALATION_PATH=/opt/cisco/installed/%{software_name}-${APP_VERSION}
 
 mkdir -p ${APP_LOG_PATH}
 
-ESCAPED_LOG_PATH=`echo ${APP_LOG_PATH} | sed 's/\//\\\//g'`
+ESCAPED_LOG_PATH=`echo ${APP_LOG_PATH} | sed 's/\//\\\\\//g'`
 
 sed -i "s/##log_path##/${ESCAPED_LOG_PATH}/g" ${SOFTWARE_INSTALATION_PATH}/rundumperonproc.py
 sed -i "s/##software_name##/${SOFTWARE_NAME}/g" ${SOFTWARE_INSTALATION_PATH}/rundumperonproc.py
