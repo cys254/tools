@@ -224,7 +224,7 @@
                                     <sources>
                                         <softlinkSource>
                                             <location>
-                                                /opt/cisco/installed/${project.artifactId}-${project.version}
+                                                /opt/cisco/installed/${project.artifactId}
                                             </location>
                                         </softlinkSource>
                                     </sources>
