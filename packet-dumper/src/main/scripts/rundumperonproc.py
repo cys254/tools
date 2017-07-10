@@ -48,6 +48,6 @@ unique_pids_to_process = list(set(pids_to_process) & set(set(pids_to_process) ^ 
 print unique_pids_to_process
 
 for pid in unique_pids_to_process:
-    with open("##log_path##/packet-dumper_" + str(pid) + ".txt","wb") as out:
+    with open("##log_path##/packet-dumper_" + str(pid) + ".log","wb") as out:
         portFilter = "--pcap.portFilter=" + ",".join(pids_to_ports[pid])
         subprocess.Popen(["nsenter", "-t", str(pid), "-n", "java", "-jar", "/opt/cisco/##software_name##/packet-dumper-##software_version##.jar", portFilter, "--kafka.bootstrap-servers=test-machine.il.nds.com:80", "--spring.profiles.active=kafka,vm", "--kafkaConnector.logMode=false", "--pcap.devicePrefix=eth", "--server.port=0", "--LISTEN_PID={0}".format(pid)], stdin=out, stdout=out, stderr=out)
