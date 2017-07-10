@@ -1,5 +1,6 @@
 package com.cisco.oss.tools.processor;
 
+import com.cisco.oss.tools.hardware.CpuSampler;
 import com.cisco.oss.tools.model.PacketContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +40,6 @@ public class PacketProcessor extends Thread {
     private static final String COLLECTED_DATA_MESSAGE = "collected data: {}";
     public static final Charset DEFAULT_CHARSET = Charset.defaultCharset();
 
-
     @Autowired
     private BlockingQueue<PacketContainer> packetQueue;
 
@@ -48,6 +48,9 @@ public class PacketProcessor extends Thread {
 
     @Autowired
     private IPacketProcessingFilter processingFilter;
+
+    @Autowired
+    private CpuSampler cpuSampler;
 
     private boolean stop = false;
 
@@ -117,11 +120,18 @@ public class PacketProcessor extends Thread {
                         List<String> headers = new ArrayList<>();
                         String line = bufferedReader.readLine();
                         while (StringUtils.isNoneBlank(line)) {
-                            headers.add(line);
+                            if (line.startsWith(Constants.CONTENT_LENGTH)){
+                                final int contentLength = Integer.parseInt(line.split(" ")[1]);
+                                data.put(Constants.LENGTH, contentLength);
+                            } else {
+                                headers.add(line);
+                            }
                             line = bufferedReader.readLine();
                         }
 
-                        data.put("headers", headers);
+                        data.put(Constants.HEADERS, headers);
+
+                        data.put(Constants.CPU, cpuSampler.getCpuUsage());
 
                         data.put(Constants.TYPE, type);
                     } catch (IOException e) {

@@ -17,4 +17,7 @@ public class Constants {
     public static final String ACKNOWLEDGMENT_NUMBER = "ackNum";
     public static final String REQUEST = "REQUEST";
     public static final String RESPONSE = "RESPONSE";
+    public static final String HEADERS = "headers";
+    public static final String CPU = "cpu";
+    public static final String CONTENT_LENGTH = "Content-Length";
 }

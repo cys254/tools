@@ -25,6 +25,7 @@
         <pcap4j.version>1.7.1</pcap4j.version>
         <configuration-api.version>1.1.0-1</configuration-api.version>
         <fabric8.version>2.4.1</fabric8.version>
+        <jna.version>4.4.0</jna.version>
     </properties>
 
     <dependencyManagement>
@@ -33,6 +34,11 @@
                 <groupId>com.cisco.oss.foundation</groupId>
                 <artifactId>configuration-api</artifactId>
                 <version>${configuration-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -107,11 +113,11 @@
             </exclusions>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -127,6 +133,12 @@
             <groupId>io.fabric8</groupId>
             <artifactId>openshift-client</artifactId>
             <version>${fabric8.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-json</artifactId>
+            <version>3.4.3</version>
         </dependency>
 
         <dependency>
