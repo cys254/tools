@@ -11,6 +11,9 @@ def main(argv):
     except getopt.GetoptError:
         print 'rundumperonproc.py --kafka-bootstrap-servers host:port[,host:port,...]'
         sys.exit(2)
+    if len(opts) < 1:
+        print 'rundumperonproc.py --kafka-bootstrap-servers host:port[,host:port,...]'
+        sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
             print 'rundumperonproc.py --kafka-bootstrap-servers host:port[,host:port,...]'
