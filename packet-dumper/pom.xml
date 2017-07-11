@@ -218,6 +218,9 @@
                                         <source>
                                             <location>src/main/scripts/rundumperonproc.py</location>
                                         </source>
+                                        <source>
+                                            <location>src/main/scripts/kill_all.sh</location>
+                                        </source>
                                     </sources>
                                 </mapping>
                                 <mapping>
