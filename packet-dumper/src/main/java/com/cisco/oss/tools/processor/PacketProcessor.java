@@ -2,6 +2,7 @@ package com.cisco.oss.tools.processor;
 
 import com.cisco.oss.tools.hardware.CpuSampler;
 import com.cisco.oss.tools.model.PacketContainer;
+import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.pcap4j.packet.EthernetPacket;
@@ -39,6 +40,7 @@ public class PacketProcessor extends Thread {
     private static final String HTTP_2 = "HTTP/2.";
     private static final String COLLECTED_DATA_MESSAGE = "collected data: {}";
     public static final Charset DEFAULT_CHARSET = Charset.defaultCharset();
+    private static final Splitter SPLITTER = Splitter.onPattern("\\s+|:").omitEmptyStrings();
 
     @Autowired
     private BlockingQueue<PacketContainer> packetQueue;
@@ -121,7 +123,7 @@ public class PacketProcessor extends Thread {
                         String line = bufferedReader.readLine();
                         while (StringUtils.isNoneBlank(line)) {
                             if (line.startsWith(Constants.CONTENT_LENGTH)){
-                                final int contentLength = Integer.parseInt(line.split(" ")[1]);
+                                final int contentLength = Integer.parseInt(SPLITTER.splitToList(line).get(1));
                                 data.put(Constants.LENGTH, contentLength);
                             } else {
                                 headers.add(line);
