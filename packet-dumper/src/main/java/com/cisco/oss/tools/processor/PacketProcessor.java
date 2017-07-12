@@ -142,10 +142,6 @@ public class PacketProcessor extends Thread {
                         log.error(e.toString(), e);
                     }
 
-                    data.put(Constants.SEQUENCE_NUMBER, tcpPacket.getHeader().getSequenceNumberAsLong());
-                    data.put(Constants.ACKNOWLEDGMENT_NUMBER, tcpPacket.getHeader().getAcknowledgmentNumberAsLong());
-
-
                     if (processingFilter.filter(data)) {
                         log.debug(COLLECTED_DATA_MESSAGE, data);
                         dataQueue.add(data);

@@ -13,8 +13,6 @@ public class Constants {
     public static final String R_LINE = "l";
     public static final String LENGTH = "len";
     public static final String TYPE = "t";
-    public static final String SEQUENCE_NUMBER = "seqNum";
-    public static final String ACKNOWLEDGMENT_NUMBER = "ackNum";
     public static final String REQUEST = "REQUEST";
     public static final String RESPONSE = "RESPONSE";
     public static final String HEADERS = "headers";

@@ -25,7 +25,7 @@ def main(argv):
     pids_to_ports = {}
     pids_to_process=[]
     dumperpids = []
-    print "Total PIDs: " +  str(len(pids))
+    print "Total PIDs: " + str(len(pids))
     regex=r'.*--LISTEN_PID=([0-9]+)'
     try:
         for pid in pids:
