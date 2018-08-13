@@ -18,6 +18,7 @@ package com.cisco.oss.foundation.tools.simulator.rest.container;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class SimulatorEntity {
 	public SimulatorEntity(int port) {
 		this.port = port;
 		simulatorResponses = new ArrayList<SimulatorResponse>();
-		allRequests = new ArrayList<SimulatorRequest>();
+		allRequests = Collections.synchronizedList(new ArrayList<SimulatorRequest>());
 	}
 
 	public int getPort() {
